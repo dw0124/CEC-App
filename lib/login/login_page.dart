@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:induk/login/login_repository.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -36,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Image.asset("assets/induk_logo.png"),
+              Image.asset("assets/images/induk_logo.png"),
 
               SizedBox(height: 32,),
 
@@ -92,8 +93,10 @@ class _LoginPageState extends State<LoginPage> {
                 width: double.infinity,
                 height: 48,
                 child: ElevatedButton(
-                  onPressed: () {
-                    print(_idTextController.text + _pwTextController.text);
+                  onPressed: () async {
+                    final id = _idTextController.text;
+                    final pwd = _pwTextController.text;
+                    final result = await LoginRepository().login(id: id, pwd: pwd);
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
