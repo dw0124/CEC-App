@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:induk/common/repository/token_repository.dart';
 import 'package:induk/login/login_page.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 Future<void> main() async {
   await dotenv.load(fileName: 'assets/config/.env');
+
+  final accessToken = await TokenRepository().getAccessToken();
 
   runApp(const MyApp());
 }
