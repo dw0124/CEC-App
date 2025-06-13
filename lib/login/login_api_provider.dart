@@ -29,9 +29,6 @@ class LoginApiProvider {
 
     if (response.statusCode == 200) {
       final jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
-
-      print(jsonResponse);
-
       return jsonResponse;
     } else {
       throw Exception('Failed to Login: ${response.statusCode}');
