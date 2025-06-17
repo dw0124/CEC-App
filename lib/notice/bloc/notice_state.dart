@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
+import 'package:induk/common/models/author.dart';
 import 'package:induk/common/models/notice.dart';
+import 'package:induk/common/models/pageable.dart';
 
 enum NoticeStatus { initial, loading, success, failure }
 
@@ -12,22 +14,35 @@ extension NoticeStatusX on NoticeStatus {
 
 class NoticeState extends Equatable {
 
-  final Notice notice;
   final NoticeStatus noticeStatus;
+  final List<Notice> notices;
+  final Author author;
+  final Pageable pageable;
 
   NoticeState({
     this.noticeStatus = NoticeStatus.initial,
-    Notice? notice,
-  }) : notice = notice ?? Notice.empty;
+    List<Notice>? notices,
+    Author? author,
+    Pageable? pageable,
+  }) : notices = notices ?? [Notice.empty, Notice.empty, Notice.empty, Notice.empty, Notice.empty, Notice.empty, Notice.empty, Notice.empty, Notice.empty, Notice.empty],
+    author = author ?? Author.empty,
+    pageable = pageable ?? Pageable.empty;
 
-  NoticeState copyWith({NoticeStatus? noticeStatus, Notice? notice}) {
+  NoticeState copyWith({
+    NoticeStatus? noticeStatus,
+    List<Notice>? notices,
+    Author? author,
+    Pageable? pageable
+  }) {
     return NoticeState(
       noticeStatus: noticeStatus ?? this.noticeStatus,
-      notice: notice ?? this.notice,
+      notices: notices ?? this.notices,
+      author: author ?? this.author,
+      pageable: pageable ?? this.pageable,
     );
   }
 
   @override
-  List<Object?> get props => [notice];
+  List<Object?> get props => [notices, author, pageable];
 }
 
