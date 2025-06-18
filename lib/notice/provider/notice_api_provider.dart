@@ -1,0 +1,52 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:http/http.dart' as http;
+import 'package:induk/common/errors.dart';
+import 'dart:convert';
+
+import 'package:induk/common/repository/token_repository.dart';
+
+class NoticeApiProvider {
+  NoticeApiProvider({http.Client? httpClient})
+      : _httpClient = httpClient ?? http.Client();
+
+  final http.Client _httpClient;
+
+  Future<Map<String, dynamic>> fetchNotices({required int page}) async {
+    try {
+      final accessToken = await TokenRepository().getAccessToken();
+
+      final String baseURL = dotenv.env['BASE_URL']!;
+
+      final header = {
+        "accept": "*/*",
+        "Authorization": "Bearer $accessToken",
+        "Referer": "https://$baseURL",
+      };
+
+      final query = {
+        "page": page.toString(),
+        "size": 10.toString(),
+      };
+
+      final url = Uri.https(
+        baseURL,
+        "/api/notices",
+        query
+      );
+
+      var response = await _httpClient.get(
+        url,
+        headers: header,
+      );
+
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    } on TokenException {
+      rethrow;
+    } catch (error) {
+      throw Exception("공지사항 불러오기 실패: $error");
+    }
+  }
+
+  void close() { _httpClient.close(); }
+}
