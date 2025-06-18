@@ -1,4 +1,5 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:induk/common/errors.dart';
 
 class TokenRepository {
   static final TokenRepository _instance = TokenRepository._internal();
@@ -13,8 +14,13 @@ class TokenRepository {
     await _storage.write(key: 'access_token', value: token);
   }
 
-  Future<String?> getAccessToken() async {
-    return await _storage.read(key: 'access_token');
+  Future<String> getAccessToken() async {
+    final token = await _storage.read(key: 'access_token');
+    if (token == null) {
+      throw TokenException(TokenErrorType.notFound);
+    }
+
+    return token;
   }
 
   Future<void> deleteAccessToken() async {
