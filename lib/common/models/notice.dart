@@ -5,7 +5,7 @@ class Notice {
   final String title;
   final String content;
   final bool important;
-  final String attachmentUrl;
+  final String? attachmentUrl;
   final int view;
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -28,7 +28,7 @@ class Notice {
     final String title = json['title'];
     final String content = json['content'];
     final bool important = json['important'];
-    final String attachmentUrl = json['attachmentUrl'];
+    final String? attachmentUrl = json['attachmentUrl'];
     final int view = json['view'];
     final DateTime createdAt = DateTime.parse(json['createdAt']);
     final DateTime updatedAt = DateTime.parse(json['updatedAt']);
