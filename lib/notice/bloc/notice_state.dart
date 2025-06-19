@@ -16,33 +16,28 @@ class NoticeState extends Equatable {
 
   final NoticeStatus noticeStatus;
   final List<Notice> notices;
-  final Author author;
   final Pageable pageable;
 
   NoticeState({
     this.noticeStatus = NoticeStatus.initial,
     List<Notice>? notices,
-    Author? author,
     Pageable? pageable,
-  }) : notices = notices ?? [Notice.empty, Notice.empty, Notice.empty, Notice.empty, Notice.empty, Notice.empty, Notice.empty, Notice.empty, Notice.empty, Notice.empty],
-    author = author ?? Author.empty,
+  }) : notices = notices ?? [Notice.empty, Notice.empty, Notice.empty],
     pageable = pageable ?? Pageable.empty;
 
   NoticeState copyWith({
     NoticeStatus? noticeStatus,
     List<Notice>? notices,
-    Author? author,
     Pageable? pageable
   }) {
     return NoticeState(
       noticeStatus: noticeStatus ?? this.noticeStatus,
       notices: notices ?? this.notices,
-      author: author ?? this.author,
       pageable: pageable ?? this.pageable,
     );
   }
 
   @override
-  List<Object?> get props => [notices, author, pageable];
+  List<Object?> get props => [notices, pageable];
 }
 
