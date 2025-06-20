@@ -1,44 +1,60 @@
 import 'package:bloc/bloc.dart';
 import 'package:induk/notice/bloc/notice_state.dart';
+import 'package:induk/notice/repository/notice_repository.dart';
 
 sealed class NoticeEvent {}
 
-final class NoticeFetchEvent extends NoticeEvent {}
-final class CounterErrorPressed extends NoticeEvent {}
+final class NoticeFetchEvent extends NoticeEvent {
+  final String searchType;
+  final String? keyword;
+  final String sortDirection;
+  final bool isLoadMore;
+
+  NoticeFetchEvent({
+    this.searchType = "ALL",
+    this.keyword,
+    this.sortDirection = "DESC",
+    this.isLoadMore = false,
+  });
+}
 
 class NoticeBloc extends Bloc<NoticeEvent, NoticeState> {
-  NoticeBloc() : super(NoticeState()) {
-    // CounterIncrementPressed 이벤트를 관리하는 EventHandler
-    on<NoticeFetchEvent>((event, emit) => emit(state));
-    on<CounterErrorPressed>((event, emit) {
-      addError(Exception('error!'), StackTrace.current);
+
+  final NoticeRepository _noticeRepository;
+
+  NoticeBloc(this._noticeRepository) : super(NoticeState()) {
+    // NoticeFetchEvent 이벤트를 관리하는 EventHandler
+    on<NoticeFetchEvent>((event, emit) {
+      fetchNotice(event, emit);
     });
   }
 
-  @override
-  void onEvent(NoticeEvent event) {
-    // 이벤트 발생 시 호출됨
-    super.onEvent(event);
-    print(event);
-  }
+  Future<void> fetchNotice(NoticeFetchEvent event, Emitter<NoticeState> emit) async {
+    try {
+      final page = event.isLoadMore ? state.pageable.pageNumber + 1 : 0;
+      final searchType = event.searchType;
+      final keyword = event.keyword;
+      final sortDirection = event.sortDirection;
 
-  @override
-  void onChange(Change<NoticeState> change) {
-    // State가 변경될 때 호출됨
-    super.onChange(change);
-    print(change);
-  }
+      final noticeResponse = await _noticeRepository.fetchNotices(
+        page: page,
+        searchType: searchType,
+        keyword: keyword,
+        sortDirection: sortDirection,
+      );
 
-  @override
-  void onTransition(Transition<NoticeEvent, NoticeState> transition) {
-    // State가 변경될 때 호출됨 (이벤트 정보를 포함)
-    super.onTransition(transition);
-    print(transition);
-  }
+      final notices = noticeResponse.notices;
+      final pageable = noticeResponse.pageable;
 
-  @override
-  void onError(Object error, StackTrace stackTrace) {
-    print('$error, $stackTrace');
-    super.onError(error, stackTrace);
+      final newState = state.copyWith(
+          noticeStatus: NoticeStatus.success,
+          notices: notices,
+          pageable: pageable
+      );
+
+      emit(newState);
+    } catch(error) {
+      emit(state.copyWith(noticeStatus: NoticeStatus.failure));
+    }
   }
 }

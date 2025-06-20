@@ -11,7 +11,12 @@ class NoticeApiProvider {
 
   final http.Client _httpClient;
 
-  Future<Map<String, dynamic>> fetchNotices({required int page}) async {
+  Future<Map<String, dynamic>> fetchNotices({
+    required int page,
+    required String searchType,
+    required String? keyword,
+    required String sortDirection
+  }) async {
     try {
       final accessToken = await TokenRepository().getAccessToken();
 
@@ -24,6 +29,9 @@ class NoticeApiProvider {
       };
 
       final query = {
+        "searchType": searchType.toString(),
+        "searchKeyword": keyword.toString(),
+        "sortDirection": sortDirection.toString(),
         "page": page.toString(),
         "size": 10.toString(),
       };

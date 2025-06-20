@@ -7,9 +7,20 @@ class NoticeRepository {
 
   final NoticeApiProvider _noticeApiProvider;
 
-  Future<NoticeResponse> fetchNotices({required int page}) async {
+  Future<NoticeResponse> fetchNotices({
+    required int page,
+    required String searchType,
+    required String? keyword,
+    required String sortDirection
+  }) async {
     try {
-      final json = await _noticeApiProvider.fetchNotices(page: page);
+      final json = await _noticeApiProvider.fetchNotices(
+        page: page,
+        searchType: searchType,
+        keyword: keyword,
+        sortDirection: sortDirection,
+      );
+
       final noticeResponse = NoticeResponse.fromJson(json);
       return noticeResponse;
     } catch (error) {
