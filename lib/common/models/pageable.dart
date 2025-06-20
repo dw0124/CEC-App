@@ -26,7 +26,7 @@ class Pageable {
   }
 
   static final empty = Pageable(
-      pageNumber: -1,
+      pageNumber: 0,
       pageSize: 0,
       totalPages: 0,
       totalElements: 0
