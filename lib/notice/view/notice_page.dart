@@ -25,13 +25,16 @@ class NoticePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 spacing: 24,
                 children: [
-                  SizedBox(height: 1,),
-
-                  DropdownSearchBar(
-                      categories: ["전체", "제목", "내용"],
-                      onSearch: (category, query) {
-                        print('카테고리: $category / 검색어: $query');
-                      }
+                  Padding(
+                    padding: const EdgeInsets.only(top: 1),
+                    child: DropdownSearchBar(
+                        categories: ["전체", "제목", "내용"],
+                        onSearch: (category, query) {
+                          context.read<NoticeBloc>().add(
+                              NoticeFetchEvent()
+                          );
+                        }
+                    ),
                   ),
 
                   Text(
