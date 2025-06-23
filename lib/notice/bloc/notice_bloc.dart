@@ -24,8 +24,8 @@ class NoticeBloc extends Bloc<NoticeEvent, NoticeState> {
 
   NoticeBloc(this._noticeRepository) : super(NoticeState()) {
     // NoticeFetchEvent 이벤트를 관리하는 EventHandler
-    on<NoticeFetchEvent>((event, emit) {
-      fetchNotice(event, emit);
+    on<NoticeFetchEvent>((event, emit) async {
+      await fetchNotice(event, emit);
     });
   }
 
