@@ -30,7 +30,6 @@ class NoticeApiProvider {
 
       final query = {
         "searchType": searchType.toString(),
-        "searchKeyword": keyword.toString(),
         if (keyword != null) "searchKeyword": keyword!.toString(),
         "sortDirection": sortDirection.toString(),
         "page": page.toString(),
