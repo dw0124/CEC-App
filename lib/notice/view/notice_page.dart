@@ -32,7 +32,7 @@ class _NoticePageState extends State<NoticePage> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(32, 0, 32, 0),
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
           child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,7 +71,7 @@ class _NoticePageState extends State<NoticePage> {
                                 key: ValueKey(noticeList[index].id),
                                 notice: noticeList[index],
                                 onTap: () {
-                                  final noticeDetailPage = NoticeDetailPage(index: index);
+                                  final noticeDetailPage = NoticeDetailPage(notice: noticeList[index]);
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
