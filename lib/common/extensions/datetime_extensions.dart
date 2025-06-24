@@ -15,4 +15,10 @@ extension DatetimeExtensions on DateTime {
       return '$year.${month.toString().padLeft(2, '0')}.${day.toString().padLeft(2, '0')}';
     }
   }
+
+  String toFormatted() {
+    twoDigits(int n) => n.toString().padLeft(2, '0');
+
+    return '$year.${twoDigits(month)}.${twoDigits(day)} ${twoDigits(hour)}:${twoDigits(minute)}';
+  }
 }
