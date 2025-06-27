@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:induk/common/models/equipment.dart';
+import 'package:induk/rental/view/rental_apply_page.dart';
 import 'package:induk/rental/view/widget/rental_list_item.dart';
 
 class RentalListPage extends StatefulWidget {
@@ -37,7 +38,13 @@ class _RentalListPageState extends State<RentalListPage> {
           key: ValueKey(equipmentList[index].id),
           equipment: equipmentList[index],
           onTap: () {
-            print(equipmentList[index].name);
+            final rentalApplyPage = RentalApplyPage(equipment: equipmentList[index]);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => rentalApplyPage,
+                )
+            );
           },
         );
       },
