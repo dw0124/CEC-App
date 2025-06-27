@@ -34,8 +34,11 @@ class _RentalListPageState extends State<RentalListPage> {
       scrollDirection: Axis.vertical,
       itemBuilder: (context, index) {
         return RentalListItem(
-            key: ValueKey(equipmentList[index].id),
-            equipment: equipmentList[index],
+          key: ValueKey(equipmentList[index].id),
+          equipment: equipmentList[index],
+          onTap: () {
+            print(equipmentList[index].name);
+          },
         );
       },
       separatorBuilder: (BuildContext context, int index) => Divider(
