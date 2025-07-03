@@ -3,9 +3,19 @@ import 'package:induk/cart/model/cart_item.dart';
 
 class CartListItem extends StatefulWidget {
   final CartItem cartItem;
+  final bool isSelected;
+  final ValueChanged<bool?> onSelectChanged;
+  final VoidCallback onDelete;
   final VoidCallback onTap;
 
-  const CartListItem({super.key, required this.cartItem, required this.onTap});
+  const CartListItem({
+    super.key,
+    required this.cartItem,
+    required this.onTap,
+    required this.isSelected,
+    required this.onSelectChanged,
+    required this.onDelete
+  });
 
   @override
   State<CartListItem> createState() => _CartListItemState();
@@ -15,6 +25,7 @@ class _CartListItemState extends State<CartListItem> {
   @override
   Widget build(BuildContext context) {
     final cartItem = widget.cartItem;
+    final isSelected = widget.isSelected;
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -29,16 +40,15 @@ class _CartListItemState extends State<CartListItem> {
               children: [
                 // 장바구니 선택 버튼
                 Checkbox(
-                  value: false,
+                  value: isSelected,
+                  activeColor: Color(0xFF8A1E35),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(2.0),
                   ),
                   side: WidgetStateBorderSide.resolveWith(
                         (states) => BorderSide(width: 1.2, color: Colors.grey),
                   ),
-                  onChanged: (value) {
-
-                  }
+                  onChanged: widget.onSelectChanged
                 ),
 
                 // 장비 이미지
@@ -79,9 +89,7 @@ class _CartListItemState extends State<CartListItem> {
                     size: 20, // 기본은 24. 작게 하면 얇아 보여요.
                     color: Colors.grey[500],
                   ),
-                  onPressed: () {
-                    // 삭제 처리
-                  },
+                  onPressed: widget.onDelete,
                 )
               ],
             ),
