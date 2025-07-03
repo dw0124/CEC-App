@@ -113,6 +113,13 @@ class _CartPageState extends State<CartPage> {
               return CartListItem(
                 key: ValueKey( widget.cartList[index].equipment.id),
                 cartItem:  widget.cartList[index],
+                isSelected: true,
+                onSelectChanged: (value) {
+                  print("$index: $value");
+                },
+                onDelete: () {
+                  print("$index: onDelete");
+                },
                 onTap: () {
 
                 },
