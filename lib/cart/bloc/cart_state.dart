@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:induk/cart/model/cart_item.dart';
+import 'package:induk/common/models/equipment.dart';
 
 enum CartStatus { initial, loading, success, failure }
 
@@ -14,7 +15,7 @@ class CartState extends Equatable {
 
   final CartStatus cartStatus;
   final List<CartItem> cartItems;
-  final Set<String> selectedItemsId;
+  final Set<int> selectedItemsId;
 
   const CartState({
     this.cartStatus = CartStatus.initial,
@@ -25,7 +26,7 @@ class CartState extends Equatable {
   CartState copyWith({
     CartStatus? cartStatus,
     List<CartItem>? cartItems,
-    Set<String>? selectedItemsId,
+    Set<int>? selectedItemsId,
   }) {
     return CartState(
       cartStatus: cartStatus ?? this.cartStatus,
