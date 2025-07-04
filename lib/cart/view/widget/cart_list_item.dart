@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:induk/cart/bloc/cart_bloc.dart';
+import 'package:induk/cart/bloc/cart_state.dart';
 import 'package:induk/cart/model/cart_item.dart';
 
 class CartListItem extends StatefulWidget {
@@ -25,7 +28,6 @@ class _CartListItemState extends State<CartListItem> {
   @override
   Widget build(BuildContext context) {
     final cartItem = widget.cartItem;
-    final isSelected = widget.isSelected;
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -39,16 +41,22 @@ class _CartListItemState extends State<CartListItem> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 // 장바구니 선택 버튼
-                Checkbox(
-                  value: isSelected,
-                  activeColor: Color(0xFF8A1E35),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(2.0),
-                  ),
-                  side: WidgetStateBorderSide.resolveWith(
-                        (states) => BorderSide(width: 1.2, color: Colors.grey),
-                  ),
-                  onChanged: widget.onSelectChanged
+                BlocSelector<CartBloc, CartState, bool>(
+                    selector: (state) => state.selectedItemsId.contains(cartItem.equipment.id),
+                    builder: (context, isSelected) {
+                      return
+                        Checkbox(
+                            value: isSelected,
+                            activeColor: Color(0xFF8A1E35),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(2.0),
+                            ),
+                            side: WidgetStateBorderSide.resolveWith(
+                                  (states) => BorderSide(width: 1.2, color: Colors.grey),
+                            ),
+                            onChanged: widget.onSelectChanged
+                        );
+                    }
                 ),
 
                 // 장비 이미지
