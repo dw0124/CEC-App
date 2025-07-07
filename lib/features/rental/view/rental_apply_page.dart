@@ -256,24 +256,24 @@ class _RentalApplyPageState extends State<RentalApplyPage> {
             child: Row(
               spacing: 16,
               children: [
-                Expanded(
-                  child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        fixedSize: Size(double.infinity, buttonHeight),
-                        foregroundColor: Color(0xFF8A1E35),
-                        backgroundColor: Color(0xFFF3DDE1),
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      child: Text(
-                          '장바구니 담기',
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                      ),
-                  ),
-                ),
+                // Expanded(
+                //   child: ElevatedButton(
+                //       onPressed: () {},
+                //       style: ElevatedButton.styleFrom(
+                //         fixedSize: Size(double.infinity, buttonHeight),
+                //         foregroundColor: Color(0xFF8A1E35),
+                //         backgroundColor: Color(0xFFF3DDE1),
+                //         elevation: 0,
+                //         shape: RoundedRectangleBorder(
+                //           borderRadius: BorderRadius.circular(8),
+                //         ),
+                //       ),
+                //       child: Text(
+                //           '장바구니 담기',
+                //         style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                //       ),
+                //   ),
+                // ),
                 Expanded(
                   child: ElevatedButton(
                       onPressed: () {},
@@ -287,7 +287,7 @@ class _RentalApplyPageState extends State<RentalApplyPage> {
                         ),
                       ),
                       child: Text(
-                          '지금 예약하기',
+                          '대여하기',
                         style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                       ),
                   ),
