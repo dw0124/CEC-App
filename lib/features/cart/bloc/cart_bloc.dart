@@ -7,9 +7,9 @@ import 'package:induk/common/models/equipment.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
 
-  final CartRepository _CartRepository;
+  final CartRepository _cartRepository;
 
-  CartBloc(this._CartRepository) : super(CartState(cartItems: [
+  CartBloc(this._cartRepository) : super(CartState(cartItems: [
     CartItem(equipment: Equipment.empty),
     CartItem(equipment: Equipment.empty2),
     CartItem(equipment: Equipment.empty3),
