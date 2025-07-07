@@ -57,6 +57,7 @@ class CartApiProvider {
       final header = {
         "accept": "*/*",
         "Authorization": "Bearer $accessToken",
+        "Content-Type": "application/json",
         "Referer": "https://$baseURL",
       };
 
@@ -72,7 +73,7 @@ class CartApiProvider {
           "/api/equipments/action"
       );
 
-      var response = await _httpClient.post(
+      var response = await _httpClient.patch(
         url,
         headers: header,
         body: body,
@@ -99,6 +100,7 @@ class CartApiProvider {
       final header = {
         "accept": "*/*",
         "Authorization": "Bearer $accessToken",
+        "Content-Type": "application/json",
         "Referer": "https://$baseURL",
       };
 
