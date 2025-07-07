@@ -10,14 +10,14 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   final CartRepository _CartRepository;
 
   CartBloc(this._CartRepository) : super(CartState(cartItems: [
-    CartItem(equipment: Equipment.empty, startDate: DateTime.now(), endDate: DateTime.now()),
-    CartItem(equipment: Equipment.empty2, startDate: DateTime.now(), endDate: DateTime.now()),
-    CartItem(equipment: Equipment.empty3, startDate: DateTime.now(), endDate: DateTime.now()),
-    CartItem(equipment: Equipment.empty4, startDate: DateTime.now(), endDate: DateTime.now()),
-    CartItem(equipment: Equipment.empty5, startDate: DateTime.now(), endDate: DateTime.now()),
-    CartItem(equipment: Equipment.empty6, startDate: DateTime.now(), endDate: DateTime.now()),
-    CartItem(equipment: Equipment.empty7, startDate: DateTime.now(), endDate: DateTime.now()),
-    CartItem(equipment: Equipment.empty8, startDate: DateTime.now(), endDate: DateTime.now()),
+    CartItem(equipment: Equipment.empty),
+    CartItem(equipment: Equipment.empty2),
+    CartItem(equipment: Equipment.empty3),
+    CartItem(equipment: Equipment.empty4),
+    CartItem(equipment: Equipment.empty5),
+    CartItem(equipment: Equipment.empty6),
+    CartItem(equipment: Equipment.empty7),
+    CartItem(equipment: Equipment.empty8),
   ])) {
     on<CartFetch>((event, emit) async => ());
 
