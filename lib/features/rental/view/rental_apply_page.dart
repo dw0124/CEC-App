@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:induk/common/models/equipment.dart';
+import 'package:induk/common/widgets/app_button.dart';
 
 class RentalApplyPage extends StatefulWidget {
   final Equipment equipment;
@@ -275,22 +276,7 @@ class _RentalApplyPageState extends State<RentalApplyPage> {
                 //   ),
                 // ),
                 Expanded(
-                  child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        fixedSize: Size(double.infinity, buttonHeight),
-                        foregroundColor: Colors.white,
-                        backgroundColor: Color(0xFF8A1E35),
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      child: Text(
-                          '대여하기',
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                      ),
-                  ),
+                  child: AppButton(text: '대여하기', onPressed: () {})
                 ),
               ],
             ),
