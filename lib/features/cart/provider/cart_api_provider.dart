@@ -5,8 +5,8 @@ import 'dart:convert';
 
 import 'package:induk/common/repository/token_repository.dart';
 
-class RentalApiProvider {
-  RentalApiProvider({http.Client? httpClient})
+class CartApiProvider {
+  CartApiProvider({http.Client? httpClient})
       : _httpClient = httpClient ?? http.Client();
 
   final http.Client _httpClient;
@@ -44,7 +44,7 @@ class RentalApiProvider {
   }
 
   /// 장바구니 아이템 대여 신청
-  Future<Map<String, dynamic>> requestRentCartItems({
+  Future<Map<String, dynamic>> rentCartItems({
     required List<int> cartItemIds,
     required String startAt,
     required String endAt,
@@ -88,7 +88,7 @@ class RentalApiProvider {
   }
 
   /// 장바구니 아이템 삭제
-  Future<Map<String, dynamic>> requestDeleteCartItems({
+  Future<Map<String, dynamic>> deleteCartItems({
     required List<int> cartItemIds,
   }) async {
     try {
