@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:induk/common/models/notice.dart';
 import 'package:induk/common/widgets/custom_search_bar.dart';
-import 'package:induk/notice/bloc/notice_bloc.dart';
-import 'package:induk/notice/bloc/notice_state.dart';
-import 'package:induk/notice/view/notice_detail_page.dart';
-import 'package:induk/notice/view/widget/notice_list_item.dart';
+import 'package:induk/features/notice/bloc/notice_bloc.dart';
+import 'package:induk/features/notice/bloc/notice_state.dart';
+import 'package:induk/features/notice/view/notice_detail_page.dart';
+import 'package:induk/features/notice/view/widget/notice_list_item.dart';
 
 class NoticePage extends StatefulWidget {
   const NoticePage({super.key});

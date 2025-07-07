@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:induk/cart/bloc/cart_bloc.dart';
-import 'package:induk/cart/bloc/cart_state.dart';
-import 'package:induk/cart/model/cart_item.dart';
+import 'package:induk/features/cart/bloc/cart_bloc.dart';
+import 'package:induk/features/cart/bloc/cart_state.dart';
+import 'package:induk/features/cart/model/cart_item.dart';
 
 class CartListItem extends StatefulWidget {
   final CartItem cartItem;

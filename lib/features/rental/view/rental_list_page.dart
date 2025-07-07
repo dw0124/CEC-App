@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:induk/common/models/equipment.dart';
-import 'package:induk/rental/view/rental_apply_page.dart';
-import 'package:induk/rental/view/widget/rental_list_item.dart';
+import 'package:induk/features/rental/view/rental_apply_page.dart';
+import 'package:induk/features/rental/view/widget/rental_list_item.dart';
 
 class RentalListPage extends StatefulWidget {
   final int categoryId;

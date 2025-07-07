@@ -1,5 +1,5 @@
-import 'package:induk/notice/model/notice_response.dart';
-import 'package:induk/notice/provider/notice_api_provider.dart';
+import 'package:induk/features/notice/model/notice_response.dart';
+import 'package:induk/features/notice/provider/notice_api_provider.dart';
 
 class NoticeRepository {
   NoticeRepository({NoticeApiProvider? loginApiProvider})

@@ -1,5 +1,5 @@
 import 'package:induk/common/models/equipment_category.dart';
-import 'package:induk/rental/provider/rental_api_provider.dart';
+import 'package:induk/features/rental/provider/rental_api_provider.dart';
 
 class RentalRepository {
   RentalRepository({RentalApiProvider? rentalApiProvider})

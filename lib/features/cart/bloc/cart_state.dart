@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:induk/cart/model/cart_item.dart';
-import 'package:induk/common/models/equipment.dart';
+import 'package:induk/features/cart/model/cart_item.dart';
 
 enum CartStatus { initial, loading, success, failure }
 

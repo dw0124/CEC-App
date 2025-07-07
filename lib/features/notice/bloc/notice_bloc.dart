@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:induk/notice/bloc/notice_state.dart';
-import 'package:induk/notice/repository/notice_repository.dart';
+import 'package:induk/features/notice/bloc/notice_state.dart';
+import 'package:induk/features/notice/repository/notice_repository.dart';
 
 sealed class NoticeEvent {}
 

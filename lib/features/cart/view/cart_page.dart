@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:induk/cart/bloc/cart_bloc.dart';
-import 'package:induk/cart/bloc/cart_event.dart';
-import 'package:induk/cart/bloc/cart_state.dart';
-import 'package:induk/cart/model/cart_item.dart';
-import 'package:induk/cart/view/widget/cart_list_item.dart';
+import 'package:induk/features/cart/bloc/cart_bloc.dart';
+import 'package:induk/features/cart/bloc/cart_event.dart';
+import 'package:induk/features/cart/bloc/cart_state.dart';
+import 'package:induk/features/cart/model/cart_item.dart';
+import 'package:induk/features/cart/view/widget/cart_list_item.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});

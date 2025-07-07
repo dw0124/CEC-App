@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:induk/login/login_repository.dart';
+import 'package:induk/features/login/login_repository.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

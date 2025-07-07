@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:induk/cart/bloc/cart_event.dart';
-import 'package:induk/cart/bloc/cart_state.dart';
-import 'package:induk/cart/model/cart_item.dart';
-import 'package:induk/cart/repository/cart_repository.dart';
+import 'package:induk/features/cart/bloc/cart_event.dart';
+import 'package:induk/features/cart/bloc/cart_state.dart';
+import 'package:induk/features/cart/model/cart_item.dart';
+import 'package:induk/features/cart/repository/cart_repository.dart';
 import 'package:induk/common/models/equipment.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
