@@ -82,8 +82,13 @@ class _CartListItemState extends State<CartListItem> {
                       Text(cartItem.equipment.name, style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
                       Text(cartItem.equipment.englishCode, style: TextStyle(fontSize: 12, color: Colors.grey.shade700)),
                       Spacer(),
-                      Text('25.07.01. 14:00', style: TextStyle(fontSize: 12, color: Colors.grey.shade800)),
-                      Text('25.07.03. 14:00', style: TextStyle(fontSize: 12, color: Colors.grey.shade800))
+                      Text(
+                        cartItem.equipment.available ? '대여 가능' : '대여 불가',
+                        style: TextStyle(
+                          color: cartItem.equipment.available ? Colors.green[800] : Colors.redAccent,
+                        ),
+                        textAlign: TextAlign.end,
+                      ),
                       //Spacer(),
                     ],
                   ),
