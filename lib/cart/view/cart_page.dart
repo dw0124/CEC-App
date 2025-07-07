@@ -58,6 +58,7 @@ class _CartPageState extends State<CartPage> {
                         builder: (context, isSelected) {
                           return Checkbox(
                             value: isSelected,
+                            activeColor: Color(0xFF8A1E35),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(2.0),
                             ),
