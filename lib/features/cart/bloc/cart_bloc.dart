@@ -1,25 +1,14 @@
 import 'package:bloc/bloc.dart';
 import 'package:induk/features/cart/bloc/cart_event.dart';
 import 'package:induk/features/cart/bloc/cart_state.dart';
-import 'package:induk/features/cart/model/cart_item.dart';
 import 'package:induk/features/cart/repository/cart_repository.dart';
-import 'package:induk/common/models/equipment.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
 
   final CartRepository _cartRepository;
 
-  CartBloc(this._cartRepository) : super(CartState(cartItems: [
-    CartItem(equipment: Equipment.empty),
-    CartItem(equipment: Equipment.empty2),
-    CartItem(equipment: Equipment.empty3),
-    CartItem(equipment: Equipment.empty4),
-    CartItem(equipment: Equipment.empty5),
-    CartItem(equipment: Equipment.empty6),
-    CartItem(equipment: Equipment.empty7),
-    CartItem(equipment: Equipment.empty8),
-  ])) {
-    on<CartFetch>((event, emit) async => ());
+  CartBloc(this._cartRepository) : super(CartState.initial()) {
+    on<CartFetch>((event, emit) async => await _fetchCartItems(event, emit));
 
     on<CartSelectAll>((event, emit) async => await _selectAll(event, emit));
 
@@ -29,7 +18,11 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
     on<CartDeleteItem>((event, emit) async => await _deleteItem(event, emit));
 
-    on<CartRentSelectedRequested>((event, emit) => ());
+    on<CartRentSelectedRequested>((event, emit) async => await _rentCartItems(event, emit));
+  }
+
+  Future<void> _fetchCartItems(CartFetch event, Emitter<CartState> emit) async {
+    _cartRepository.fetchCartItems();
   }
 
   Future<void> _selectAll(CartSelectAll event, Emitter<CartState> emit) async {
@@ -51,11 +44,13 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
   Future<void> _deleteSelectedItems(CartDeleteSelectedItems event, Emitter<CartState> emit) async {
-    final selectedItemsId = state.selectedItemsId;
+    final selectedItemsId = state.selectedItemsId.toList();
 
     final updatedCartItems = state.cartItems
         .where((item) => !selectedItemsId.contains(item.equipment.id))
         .toList();
+
+    _cartRepository.deleteCartItems(cartItemIds: selectedItemsId);
 
     emit(state.copyWith(
       cartItems: updatedCartItems,
@@ -94,6 +89,16 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         selectedItemsId: updatedSelectedItems
     );
 
+    _cartRepository.deleteCartItems(cartItemIds: [selectedItemId]);
+
     emit(newState);
+  }
+
+  Future<void> _rentCartItems(CartRentSelectedRequested event, Emitter<CartState> emit) async {
+    final selectedItemIds = state.selectedItemsId.toList();
+    final startAt = state.startAt;
+    final endAt = state.endAt;
+
+    _cartRepository.rentCartItems(cartItemIds: selectedItemIds, startAt: startAt, endAt: endAt);
   }
 }
