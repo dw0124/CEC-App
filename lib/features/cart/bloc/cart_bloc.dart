@@ -19,6 +19,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<CartDeleteItem>((event, emit) async => await _deleteItem(event, emit));
 
     on<CartRentSelectedRequested>((event, emit) async => await _rentCartItems(event, emit));
+
+    on<CartDateTimeUpdated>((event, emit) async => await _dateTimeUpdated(event, emit));
   }
 
   Future<void> _fetchCartItems(CartFetch event, Emitter<CartState> emit) async {
@@ -100,5 +102,26 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     final endAt = state.endAt;
 
     _cartRepository.rentCartItems(cartItemIds: selectedItemIds, startAt: startAt, endAt: endAt);
+  }
+
+  Future<void> _dateTimeUpdated(CartDateTimeUpdated event, Emitter<CartState> emit) async {
+    final update = event.isStart ? state.startAt : state.endAt;
+
+    final date = event.date;
+    final time = event.time;
+
+    final updated = DateTime(
+      date?.year ?? update.year,
+      date?.month ?? update.month,
+      date?.day ?? update.day,
+      time?.hour ?? update.hour,
+      time?.minute ?? update.minute,
+    );
+
+    if (event.isStart) {
+      emit(state.copyWith(startAt: updated));
+    } else {
+      emit(state.copyWith(endAt: updated));
+    }
   }
 }
