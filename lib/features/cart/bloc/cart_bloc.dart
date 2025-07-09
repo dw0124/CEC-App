@@ -24,7 +24,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
   Future<void> _fetchCartItems(CartFetch event, Emitter<CartState> emit) async {
-    _cartRepository.fetchCartItems();
+    final cartItems = await _cartRepository.fetchCartItems();
+    final updateState = state.copyWith(cartItems: cartItems);
+    emit(updateState);
   }
 
   Future<void> _selectAll(CartSelectAll event, Emitter<CartState> emit) async {
