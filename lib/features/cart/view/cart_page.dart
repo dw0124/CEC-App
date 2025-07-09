@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:induk/common/widgets/app_button.dart';
 import 'package:induk/features/cart/bloc/cart_bloc.dart';
 import 'package:induk/features/cart/bloc/cart_event.dart';
 import 'package:induk/features/cart/bloc/cart_state.dart';
@@ -16,6 +17,8 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   @override
   void initState() {
+    context.read<CartBloc>().add(CartFetch());
+
     super.initState();
   }
 
@@ -156,25 +159,7 @@ class _CartPageState extends State<CartPage> {
               spacing: 16,
               children: [
                 Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: Size(double.infinity, buttonHeight),
-                      foregroundColor: Colors.white,
-                      backgroundColor: Color(0xFF8A1E35),
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    child: Text(
-                      '대여하기',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
+                  child: AppButton(text: '대여하기', onPressed: () => _showRentalBottomSheet(context))
                 ),
               ],
             ),
@@ -183,4 +168,149 @@ class _CartPageState extends State<CartPage> {
       ),
     );
   }
+
+  void _showRentalBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (_) {
+        final bottomPadding = MediaQuery.of(context).padding.bottom;
+
+        DateTime? startDate;
+        DateTime? endDate;
+
+        return Padding(
+          padding: EdgeInsets.fromLTRB(16, 8, 16, bottomPadding),
+          child: Column(
+            spacing: 8,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    '대여 시작',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600
+                    ),
+                  ),
+
+                  Spacer(),
+                  ElevatedButton(
+                    onPressed: () {
+
+                      context.read<CartBloc>().add(CartDateTimeUpdated(isStart: true, date: DateTime(2025, 7, 8)));
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(horizontal: 0),
+                      fixedSize: Size(120, 36),
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.grey[300],
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: Text(
+                      '2025.07.01',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  ElevatedButton(
+                    onPressed: () {
+                      context.read<CartBloc>().add(CartDateTimeUpdated(isStart: true, time: TimeOfDay(hour: 16, minute: 0)));
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(horizontal: 0),
+                      fixedSize: Size(120, 36),
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.grey[300],
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: Text(
+                      '오후 11:11',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                ],
+              ),
+
+              Row(
+                children: [
+                  Text(
+                    '대여 종료',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600
+                    ),
+                  ),
+
+                  Spacer(),
+                  ElevatedButton(
+                    onPressed: () {
+                      context.read<CartBloc>().add(CartDateTimeUpdated(isStart: false, date: DateTime(2025, 7, 8)));
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(horizontal: 0),
+                      fixedSize: Size(120, 36),
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.grey[300],
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: Text(
+                      '2025.07.01',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  ElevatedButton(
+                    onPressed: () {
+                      context.read<CartBloc>().add(CartDateTimeUpdated(isStart: false, time: TimeOfDay(hour: 16, minute: 0)));
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(horizontal: 0),
+                      fixedSize: Size(120, 36),
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.grey[300],
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: Text(
+                      '오후 11:11',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                ],
+              ),
+
+              Container(
+                width: double.infinity,
+                child: AppButton(
+                  text: '대여하기',
+                  onPressed: () {
+
+                  },
+                )
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
 }
