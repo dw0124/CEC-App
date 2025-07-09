@@ -314,7 +314,7 @@ class _CartPageState extends State<CartPage> {
                 child: AppButton(
                   text: '대여하기',
                   onPressed: () {
-
+                    context.read<CartBloc>().add(CartRentSelectedRequested());
                   },
                 )
               ),
