@@ -32,16 +32,7 @@ class CartState extends Equatable {
     final now = DateTime.now();
     return CartState(
       cartStatus: CartStatus.initial,
-      cartItems: [
-        CartItem(equipment: Equipment.empty),
-        CartItem(equipment: Equipment.empty2),
-        CartItem(equipment: Equipment.empty3),
-        CartItem(equipment: Equipment.empty4),
-        CartItem(equipment: Equipment.empty5),
-        CartItem(equipment: Equipment.empty6),
-        CartItem(equipment: Equipment.empty7),
-        CartItem(equipment: Equipment.empty8),
-      ],
+      cartItems: [],
       selectedItemsId: {},
       startAt: now,
       endAt: now.add(Duration(hours: 1)),
