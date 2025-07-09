@@ -25,7 +25,11 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   Future<void> _fetchCartItems(CartFetch event, Emitter<CartState> emit) async {
     final cartItems = await _cartRepository.fetchCartItems();
-    final updateState = state.copyWith(cartItems: cartItems);
+    final updateState = state.copyWith(
+        cartStatus: CartStatus.success,
+        cartItems: cartItems,
+        selectedItemsId: {},
+    );
     emit(updateState);
   }
 
@@ -36,7 +40,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
     if (isSelected) {
       state.cartItems.forEach((cartItem) {
-        selectedItemsId.add(cartItem.equipment.id);
+        selectedItemsId.add(cartItem.id);
       });
     } else {
       selectedItemsId.clear();
@@ -51,7 +55,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     final selectedItemsId = state.selectedItemsId.toList();
 
     final updatedCartItems = state.cartItems
-        .where((item) => !selectedItemsId.contains(item.equipment.id))
+        .where((item) => !selectedItemsId.contains(item.id))
         .toList();
 
     _cartRepository.deleteCartItems(cartItemIds: selectedItemsId);
@@ -85,7 +89,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     updatedSelectedItems.remove(selectedItemId);
 
     final updatedCartItems = state.cartItems
-        .where((item) => item.equipment.id != selectedItemId)
+        .where((item) => item.id != selectedItemId)
         .toList();
 
     final newState = state.copyWith(
@@ -103,7 +107,14 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     final startAt = state.startAt;
     final endAt = state.endAt;
 
-    _cartRepository.rentCartItems(cartItemIds: selectedItemIds, startAt: startAt, endAt: endAt);
+    // selectedItemsIds - 장바구니ID
+    // selectedItemsIds에서 장비ID 뽑아내고 List에 담아서 전달
+    final rentItems = state.cartItems
+        .where((cartItem) => selectedItemIds.contains(cartItem.id))
+        .map((cartItem) => cartItem.equipment.id)
+        .toList();
+
+    _cartRepository.rentCartItems(cartItemIds: rentItems, startAt: startAt, endAt: endAt);
   }
 
   Future<void> _dateTimeUpdated(CartDateTimeUpdated event, Emitter<CartState> emit) async {
