@@ -23,11 +23,11 @@ class CartRepository {
     required List<int> cartItemIds,
     required DateTime startAt,
     required DateTime endAt,
-  }) {
+  }) async {
     final startAtString = startAt.toIso8601String();
     final endAtString = endAt.toIso8601String();
 
-    _cartApiProvider.rentCartItems(cartItemIds: cartItemIds, startAt: startAtString, endAt: endAtString);
+    final jsonResponse = await _cartApiProvider.rentCartItems(cartItemIds: cartItemIds, startAt: startAtString, endAt: endAtString);
   }
 
   void deleteCartItems({
