@@ -1,3 +1,5 @@
+import 'package:induk/features/cart/model/cart_item.dart';
+import 'package:induk/features/cart/model/cart_response.dart';
 import 'package:induk/features/cart/provider/cart_api_provider.dart';
 
 class CartRepository {
@@ -6,8 +8,15 @@ class CartRepository {
 
   final CartApiProvider _cartApiProvider;
 
-  void fetchCartItems() {
-    _cartApiProvider.fetchCartItems();
+  Future<List<CartItem>> fetchCartItems() async {
+    final json = await _cartApiProvider.fetchCartItems();
+    final cartResponse = CartResponse.fromJson(json);
+
+    final List<CartItem> cartItems = cartResponse.data
+        .map((json) => CartItem.fromJson(json))
+        .toList();
+
+    return cartItems;
   }
 
   void rentCartItems({
