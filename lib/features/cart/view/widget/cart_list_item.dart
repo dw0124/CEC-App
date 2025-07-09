@@ -42,7 +42,7 @@ class _CartListItemState extends State<CartListItem> {
               children: [
                 // 장바구니 선택 버튼
                 BlocSelector<CartBloc, CartState, bool>(
-                    selector: (state) => state.selectedItemsId.contains(cartItem.equipment.id),
+                    selector: (state) => state.selectedItemsId.contains(cartItem.id),
                     builder: (context, isSelected) {
                       return
                         Checkbox(

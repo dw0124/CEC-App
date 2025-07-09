@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:induk/common/widgets/app_button.dart';
+import 'package:induk/common/widgets/custom_alert_dialog.dart';
 import 'package:induk/features/cart/bloc/cart_bloc.dart';
 import 'package:induk/features/cart/bloc/cart_event.dart';
 import 'package:induk/features/cart/bloc/cart_state.dart';
@@ -86,7 +87,18 @@ class _CartPageState extends State<CartPage> {
 
                     // 선택 삭제 버튼
                     TextButton(
-                      onPressed: () => context.read<CartBloc>().add(CartDeleteSelectedItems()),
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => CustomAlertDialog(
+                            title: '선택한 장비를 장바구니에서 삭제할까요?',
+                            content: '선택한 장비를 장바구니에서 삭제할까요?',
+                            onConfirm: () {
+                              context.read<CartBloc>().add(CartDeleteSelectedItems());
+                            },
+                          ),
+                        );
+                      },
                       child: Text(
                         '선택삭제',
                         style: TextStyle(color: Colors.grey.shade600),
@@ -110,19 +122,19 @@ class _CartPageState extends State<CartPage> {
                 scrollDirection: Axis.vertical,
                 itemBuilder: (context, index) {
                   return CartListItem(
-                    key: ValueKey(cartItems[index].equipment.id),
+                    key: ValueKey(cartItems[index].id),
                     cartItem: cartItems[index],
                     isSelected: true,
                     onSelectChanged: (value) {
                       final selectedItemId =
-                          cartItems[index].equipment.id;
+                          cartItems[index].id;
                       context.read<CartBloc>().add(
                         CartSelectItem(selectedItemId: selectedItemId),
                       );
                     },
                     onDelete: () {
                       final selectedItemId =
-                          cartItems[index].equipment.id;
+                          cartItems[index].id;
                       context.read<CartBloc>().add(
                         CartDeleteItem(selectedItemId: selectedItemId),
                       );
