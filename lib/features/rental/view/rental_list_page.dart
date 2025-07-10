@@ -10,13 +10,16 @@ import 'package:induk/features/rental/view/widget/rental_list_item.dart';
 class RentalListPage extends StatefulWidget {
   final int categoryId;
 
-  RentalListPage({super.key, required this.categoryId});
+  const RentalListPage({super.key, required this.categoryId});
 
   @override
   State<RentalListPage> createState() => _RentalListPageState();
 }
 
-class _RentalListPageState extends State<RentalListPage> {
+class _RentalListPageState extends State<RentalListPage> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   void initState() {
     context.read<RentalBloc>().add(RentalItemListFetch(categoryId: widget.categoryId));
@@ -24,6 +27,7 @@ class _RentalListPageState extends State<RentalListPage> {
   }
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocSelector<RentalBloc, RentalState, List<Equipment>?>(
         selector: (state) => state.rentalItemList[widget.categoryId],
         builder: (context, equipmentList) {
