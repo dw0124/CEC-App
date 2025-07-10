@@ -47,8 +47,8 @@ class RentalApiProvider {
   Future<Map<String, dynamic>> fetchEquipmentModels({
     required int page,
     required String categoryId,
-    required String? searchKeyword,
-    required String sortDirection
+    String? searchKeyword,
+    String sortDirection = "ASC"
   }) async {
     try {
       final accessToken = await TokenRepository().getAccessToken();
