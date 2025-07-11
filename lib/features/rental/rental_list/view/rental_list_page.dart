@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:induk/common/models/equipment.dart';
-import 'package:induk/features/rental/bloc/rental_bloc.dart';
-import 'package:induk/features/rental/bloc/rental_event.dart';
-import 'package:induk/features/rental/bloc/rental_state.dart';
-import 'package:induk/features/rental/view/rental_apply_page.dart';
-import 'package:induk/features/rental/view/widget/rental_list_item.dart';
+import 'package:induk/features/rental/rental_apply/view/rental_apply_page.dart';
+import 'package:induk/features/rental/rental_list//view/widget/rental_list_item.dart';
+import 'package:induk/features/rental/rental_list/bloc/rental_list_bloc.dart';
+import 'package:induk/features/rental/rental_list/bloc/rental_list_event.dart';
+import 'package:induk/features/rental/rental_list/bloc/rental_list_state.dart';
 
 class RentalListPage extends StatefulWidget {
-  final int categoryId;
 
-  const RentalListPage({super.key, required this.categoryId});
+  const RentalListPage({super.key});
 
   @override
   State<RentalListPage> createState() => _RentalListPageState();
@@ -22,47 +21,45 @@ class _RentalListPageState extends State<RentalListPage> with AutomaticKeepAlive
 
   @override
   void initState() {
-    context.read<RentalBloc>().add(RentalItemListFetch(categoryId: widget.categoryId));
+    final categoryId = context.read<RentalListBloc>().state.categoryId;
+    context.read<RentalListBloc>().add(RentalItemListFetch());
+
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return BlocSelector<RentalBloc, RentalState, List<Equipment>?>(
-        selector: (state) => state.rentalItemList[widget.categoryId],
+    return BlocSelector<RentalListBloc, RentalListState, List<Equipment>>(
+        selector: (state) => state.rentalItemList,
         builder: (context, equipmentList) {
-          if (equipmentList == null) {
-            return const Center(child: CircularProgressIndicator());
-          } else {
-            return ListView.separated(
-              itemCount: equipmentList.length,
-              scrollDirection: Axis.vertical,
-              itemBuilder: (context, index) {
-                final equipment = equipmentList[index];
+          return ListView.separated(
+            itemCount: equipmentList.length,
+            scrollDirection: Axis.vertical,
+            itemBuilder: (context, index) {
+              final equipment = equipmentList[index];
 
-                return RentalListItem(
-                  key: ValueKey(equipment.id),
-                  equipment: equipment,
-                  onTap: () {
-                    final rentalApplyPage = RentalApplyPage(
-                        equipment: equipment);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => rentalApplyPage,
-                        )
-                    );
-                  },
-                );
-              },
-              separatorBuilder: (BuildContext context, int index) =>
-                  Divider(
-                    color: Colors.black.withValues(alpha: 0.3),
-                    height: 12,
-                  ),
-            );
-          }
-        }
+              return RentalListItem(
+                key: ValueKey(equipment.id),
+                equipment: equipment,
+                onTap: () {
+                  final rentalApplyPage = RentalApplyPage(
+                      equipment: equipment);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => rentalApplyPage,
+                      )
+                  );
+                },
+              );
+            },
+            separatorBuilder: (BuildContext context, int index) =>
+                Divider(
+                  color: Colors.black.withValues(alpha: 0.3),
+                  height: 12,
+                ),
+        );
+      }
     );
   }
 }
