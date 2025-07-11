@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:induk/features/rental/view/rental_list_page.dart';
+import 'package:induk/features/rental/rental_list/view/rental_list_page.dart';
 
 class RentalPage extends StatefulWidget {
   const RentalPage({super.key});
