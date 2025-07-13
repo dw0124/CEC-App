@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class SpacedLabel extends StatelessWidget {
   final String text;
   final double width;
+  final TextStyle? style;
 
   const SpacedLabel({
     super.key,
     required this.text,
     required this.width,
+    this.style,
   });
 
   @override
@@ -22,7 +24,7 @@ class SpacedLabel extends StatelessWidget {
           final char = entry.value;
           return Text(
             i == chars.length - 1 ? '$char:' : char,
-            style: const TextStyle(fontWeight: FontWeight.w600),
+            style: style ?? TextStyle(fontWeight: FontWeight.w600),
           );
         }).toList(),
       ),
