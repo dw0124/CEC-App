@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:induk/common/models/equipment.dart';
 import 'package:induk/common/widgets/app_button.dart';
+import 'package:induk/common/widgets/spacedLabel.dart';
 
 class RentalApplyPage extends StatefulWidget {
   RentalApplyPage({super.key});
@@ -46,7 +47,7 @@ class _RentalApplyPageState extends State<RentalApplyPage> {
                 spacing: 8,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  buildLabel(text: '장비분류', width: 70),
+                  SpacedLabel(text: '장비분류', width: 70),
                   Text('삼양(소니마운트/82mm) 24-70mm'),
                 ],
               ),
@@ -54,7 +55,7 @@ class _RentalApplyPageState extends State<RentalApplyPage> {
                 spacing: 8,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  buildLabel(text: '장비이름', width: 70),
+                  SpacedLabel(text: '장비이름', width: 70),
                   Text('Samyang 24-70mm'),
                 ],
               ),
@@ -62,7 +63,7 @@ class _RentalApplyPageState extends State<RentalApplyPage> {
                 spacing: 8,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  buildLabel(text: '모델명', width: 70),
+                  SpacedLabel(text: '모델명', width: 70),
                   Text('ILME-FX3'),
                 ],
               ),
@@ -70,7 +71,7 @@ class _RentalApplyPageState extends State<RentalApplyPage> {
                 spacing: 8,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  buildLabel(text: '일련번호', width: 70),
+                  SpacedLabel(text: '일련번호', width: 70),
                   Text('00000001'),
                 ],
               ),
@@ -78,7 +79,7 @@ class _RentalApplyPageState extends State<RentalApplyPage> {
                 spacing: 8,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  buildLabel(text: '대여', width: 70),
+                  SpacedLabel(text: '대여', width: 70),
                   Text('가능'),
                 ],
               ),
@@ -136,24 +137,24 @@ class _RentalApplyPageState extends State<RentalApplyPage> {
             child: Row(
               spacing: 16,
               children: [
-                // Expanded(
-                //   child: ElevatedButton(
-                //       onPressed: () {},
-                //       style: ElevatedButton.styleFrom(
-                //         fixedSize: Size(double.infinity, buttonHeight),
-                //         foregroundColor: Color(0xFF8A1E35),
-                //         backgroundColor: Color(0xFFF3DDE1),
-                //         elevation: 0,
-                //         shape: RoundedRectangleBorder(
-                //           borderRadius: BorderRadius.circular(8),
-                //         ),
-                //       ),
-                //       child: Text(
-                //           '장바구니 담기',
-                //         style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                //       ),
-                //   ),
-                // ),
+                Expanded(
+                  child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        fixedSize: Size(double.infinity, buttonHeight),
+                        foregroundColor: Color(0xFF8A1E35),
+                        backgroundColor: Color(0xFFF3DDE1),
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: Text(
+                          '장바구니 담기',
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                      ),
+                  ),
+                ),
                 Expanded(
                   child: AppButton(text: '대여하기', onPressed: () {
                     _showRentalBottomSheet(context);
@@ -309,24 +310,4 @@ class _RentalApplyPageState extends State<RentalApplyPage> {
       },
     );
   }
-
-}
-
-
-Widget buildLabel({required String text, required double width}) {
-  final chars = text.characters.toList();
-  return SizedBox(
-    width: width,
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: chars.asMap().entries.map((entry) {
-        final i = entry.key;
-        final char = entry.value;
-        return Text(
-          i == chars.length - 1 ? '$char:' : char,
-          style: TextStyle(fontWeight: FontWeight.w600),
-        );
-      }).toList(),
-    ),
-  );
 }
