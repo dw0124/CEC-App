@@ -4,9 +4,7 @@ import 'package:induk/common/models/equipment.dart';
 import 'package:induk/common/widgets/app_button.dart';
 
 class RentalApplyPage extends StatefulWidget {
-  final Equipment equipment;
-
-  RentalApplyPage({super.key, required this.equipment});
+  RentalApplyPage({super.key});
 
   @override
   State<RentalApplyPage> createState() => _RentalApplyPageState();
@@ -28,180 +26,61 @@ class _RentalApplyPageState extends State<RentalApplyPage> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+        padding: const EdgeInsets.fromLTRB(16, 1, 16, 16),
         child: Center(
           child: Column(
-            spacing: 8,
+            spacing: 4,
             children: [
-              // 1. 장비 관련 정보
+              // 1. 장비 이미지
               Container(
-                height: 100,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  spacing: 16,
-                  children: [
-                    Container(
-                      width: 100,
-                      height: 100,
-                      color: Colors.grey.shade300,
-                      child: Center(
-                        child: Icon(Icons.image, color: Colors.grey),
-                      ),
-                    ),
-
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            SizedBox(width: 70, child: Text('장비 분류: ', style: TextStyle(fontWeight: FontWeight.w600))),
-                            Text('카메라'),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            SizedBox(width: 70, child: Text('장비 이름: ', style: TextStyle(fontWeight: FontWeight.w600))),
-                            Text('Sony FX3'),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            SizedBox(width: 70, child: Text('모델명: ', style: TextStyle(fontWeight: FontWeight.w600))),
-                            Text('ILME-FX3'),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            SizedBox(width: 70, child: Text('일련 번호: ', style: TextStyle(fontWeight: FontWeight.w600))),
-                            Text('00000001'),
-                          ],
-                        ),
-                      ],
-                    ),
-
-                    Text(
-                      true ? '대여 가능' : '대여 불가',
-                      style: TextStyle(
-                        color: true ? Colors.green[800] : Colors.redAccent,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      textAlign: TextAlign.end,
-                    ),
-                  ],
-                ),
+                color: Colors.blue,
+                alignment: Alignment.center,
+                width: double.infinity,
+                child: AspectRatio(aspectRatio: 16 / 9, child: Icon(Icons.image, color: Colors.grey)),
               ),
 
-              Divider(),
+              SizedBox(height: 4,),
 
-              // 2. 대여시간 - 대여, 반납 시간 선택 DateTime Picker
-              Container(
-                child: Column(
-                  spacing: 8,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                            '대여 시작',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600
-                          ),
-                        ),
-                        Spacer(),
-                        ElevatedButton(
-                            onPressed: () {
-                              _showCupertinoDatePicker(context);
-                            },
-                          style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(horizontal: 0),
-                            fixedSize: Size(120, 36),
-                            foregroundColor: Colors.black,
-                            backgroundColor: Colors.grey[200],
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                          child: Text(
-                            '2025.07.01',
-                            style: TextStyle(fontSize: 16),
-                          ),
-                        ),
-                        SizedBox(width: 8),
-                        ElevatedButton(
-                            onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(horizontal: 0),
-                            fixedSize: Size(120, 36),
-                            foregroundColor: Colors.black,
-                            backgroundColor: Colors.grey[200],
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                          child: Text(
-                            '오후 11:11',
-                            style: TextStyle(fontSize: 16),
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    Row(
-                      children: [
-                        Text(
-                          '대여 종료',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600
-                          ),
-                        ),
-
-                        Spacer(),
-                        ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(horizontal: 0),
-                            fixedSize: Size(120, 36),
-                            foregroundColor: Colors.black,
-                            backgroundColor: Colors.grey[200],
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                          child: Text(
-                            '2025.07.01',
-                            style: TextStyle(fontSize: 16),
-                          ),
-                        ),
-                        SizedBox(width: 8),
-                        ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(horizontal: 0),
-                            fixedSize: Size(120, 36),
-                            foregroundColor: Colors.black,
-                            backgroundColor: Colors.grey[200],
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                          child: Text(
-                            '오후 11:11',
-                            style: TextStyle(fontSize: 16),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+              // 2. 장비 관련 정보
+              Row(
+                spacing: 8,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  buildLabel(text: '장비 분류', width: 70),
+                  Text('삼양(소니마운트/82mm) 24-70mm'),
+                ],
+              ),
+              Row(
+                spacing: 8,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  buildLabel(text: '장비 이름', width: 70),
+                  Text('Samyang 24-70mm'),
+                ],
+              ),
+              Row(
+                spacing: 8,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  buildLabel(text: '모델명', width: 70),
+                  Text('ILME-FX3'),
+                ],
+              ),
+              Row(
+                spacing: 8,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  buildLabel(text: '일련번호', width: 70),
+                  Text('00000001'),
+                ],
+              ),
+              Row(
+                spacing: 8,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  buildLabel(text: '대여', width: 70),
+                  Text('가능'),
+                ],
               ),
 
               Divider(),
@@ -276,7 +155,9 @@ class _RentalApplyPageState extends State<RentalApplyPage> {
                 //   ),
                 // ),
                 Expanded(
-                  child: AppButton(text: '대여하기', onPressed: () {})
+                  child: AppButton(text: '대여하기', onPressed: () {
+                    _showRentalBottomSheet(context);
+                  })
                 ),
               ],
             ),
@@ -286,24 +167,166 @@ class _RentalApplyPageState extends State<RentalApplyPage> {
     );
   }
 
-  void _showCupertinoDatePicker(BuildContext context) {
+  void _showRentalBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      builder: (BuildContext builder) {
-        return SizedBox(
-          height: 250,
-          child: CupertinoDatePicker(
-            mode: CupertinoDatePickerMode.date, // date, time, dateAndTime
-            initialDateTime: DateTime.now(),
-            minimumYear: 2000,
-            maximumYear: 2100,
-            onDateTimeChanged: (DateTime newDateTime) {
-              print('선택된 날짜: $newDateTime');
-            },
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (_) {
+        final bottomPadding = MediaQuery.of(context).padding.bottom;
+
+        DateTime? startDate;
+        DateTime? endDate;
+
+        return Padding(
+          padding: EdgeInsets.fromLTRB(16, 8, 16, bottomPadding),
+          child: Column(
+            spacing: 8,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    '대여 시작',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600
+                    ),
+                  ),
+
+                  Spacer(),
+                  ElevatedButton(
+                    onPressed: () {
+
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(horizontal: 0),
+                      fixedSize: Size(120, 36),
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.grey[300],
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: Text(
+                      '2025.07.01',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  ElevatedButton(
+                    onPressed: () {
+
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(horizontal: 0),
+                      fixedSize: Size(120, 36),
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.grey[300],
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: Text(
+                      '오후 11:11',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                ],
+              ),
+
+              Row(
+                children: [
+                  Text(
+                    '대여 종료',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600
+                    ),
+                  ),
+
+                  Spacer(),
+                  ElevatedButton(
+                    onPressed: () {
+
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(horizontal: 0),
+                      fixedSize: Size(120, 36),
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.grey[300],
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: Text(
+                      '2025.07.01',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  ElevatedButton(
+                    onPressed: () {
+
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(horizontal: 0),
+                      fixedSize: Size(120, 36),
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.grey[300],
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: Text(
+                      '오후 11:11',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                ],
+              ),
+
+              Container(
+                  width: double.infinity,
+                  child: AppButton(
+                    text: '대여하기',
+                    onPressed: () {
+
+                    },
+                  )
+              ),
+            ],
           ),
         );
       },
     );
   }
 
+}
+
+
+Widget buildLabel({required String text, required double width}) {
+  final chars = text.characters.toList();
+  return SizedBox(
+    width: width,
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: chars.asMap().entries.map((entry) {
+        final i = entry.key;
+        final char = entry.value;
+        return Text(
+          i == chars.length - 1 ? '$char:' : char,
+          style: TextStyle(fontWeight: FontWeight.w600),
+        );
+      }).toList(),
+    ),
+  );
 }
