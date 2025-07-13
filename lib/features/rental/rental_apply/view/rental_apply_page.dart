@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:induk/common/models/equipment.dart';
 import 'package:induk/common/widgets/app_button.dart';
-import 'package:induk/common/widgets/spacedLabel.dart';
+import 'package:induk/common/widgets/key_value_text.dart';
 
 class RentalApplyPage extends StatefulWidget {
   RentalApplyPage({super.key});
@@ -43,46 +43,10 @@ class _RentalApplyPageState extends State<RentalApplyPage> {
               SizedBox(height: 4,),
 
               // 2. 장비 관련 정보
-              Row(
-                spacing: 8,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SpacedLabel(text: '장비분류', width: 70),
-                  Text('삼양(소니마운트/82mm) 24-70mm'),
-                ],
-              ),
-              Row(
-                spacing: 8,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SpacedLabel(text: '장비이름', width: 70),
-                  Text('Samyang 24-70mm'),
-                ],
-              ),
-              Row(
-                spacing: 8,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SpacedLabel(text: '모델명', width: 70),
-                  Text('ILME-FX3'),
-                ],
-              ),
-              Row(
-                spacing: 8,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SpacedLabel(text: '일련번호', width: 70),
-                  Text('00000001'),
-                ],
-              ),
-              Row(
-                spacing: 8,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SpacedLabel(text: '대여', width: 70),
-                  Text('가능'),
-                ],
-              ),
+              KeyValueText(keyString: '장비분류', valueString: '카메라 렌즈'),
+              KeyValueText(keyString: '장비이름', valueString: '삼양(소니마운트/82mm) 24-70mm'),
+              KeyValueText(keyString: '일련번호', valueString: '00000001'),
+              KeyValueText(keyString: '대여', valueString: '대여 가능'),
 
               Divider(),
 
