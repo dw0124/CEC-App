@@ -46,7 +46,7 @@ class _RentalApplyPageState extends State<RentalApplyPage> {
                 spacing: 8,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  buildLabel(text: '장비 분류', width: 70),
+                  buildLabel(text: '장비분류', width: 70),
                   Text('삼양(소니마운트/82mm) 24-70mm'),
                 ],
               ),
@@ -54,7 +54,7 @@ class _RentalApplyPageState extends State<RentalApplyPage> {
                 spacing: 8,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  buildLabel(text: '장비 이름', width: 70),
+                  buildLabel(text: '장비이름', width: 70),
                   Text('Samyang 24-70mm'),
                 ],
               ),
