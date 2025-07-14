@@ -41,6 +41,26 @@ class RentalRepository {
     return equipmentList ?? [];
   }
 
+  /// 장바구니 추가
+  void requestAddToCart({required int id}) async {
+    final List<int> equipmentId = [id];
+
+    final json = await _rentalApiProvider.requestAddToCart(id: equipmentId);
+
+    final apiResponse = ApiResponse.fromJson(json: json);
+
+  }
+
+  /// 장비 대여
+  void rentCartItems({
+    required List<int> cartItemIds,
+    required DateTime startAt,
+    required DateTime endAt,
+  }) async {
+    final startAtString = startAt.toIso8601String();
+    final endAtString = endAt.toIso8601String();
+  }
+
   void dispose() {
     _rentalApiProvider.close();
   }
