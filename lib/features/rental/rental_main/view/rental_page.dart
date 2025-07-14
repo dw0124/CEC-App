@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:induk/features/rental/rental_list/bloc/rental_list_bloc.dart';
 import 'package:induk/features/rental/rental_list/view/rental_list_page.dart';
+import 'package:induk/features/rental/repository/rental_repository.dart';
 
 class RentalPage extends StatefulWidget {
   const RentalPage({super.key});
@@ -58,7 +61,13 @@ class _RentalPageState extends State<RentalPage> with SingleTickerProviderStateM
       body: TabBarView(
         controller: _tabController,
         children: List.generate(_tabs.length, (index) {
-          return RentalListPage(categoryId: index + 1);
+          return BlocProvider(
+            create: (context) {
+              final repository = context.read<RentalRepository>();
+              return RentalListBloc(repository, index + 1);
+            },
+            child: RentalListPage()
+          );
         }),
       ),
     );
