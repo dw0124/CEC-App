@@ -1,6 +1,6 @@
+import 'package:induk/common/models/api_response.dart';
 import 'package:induk/common/models/equipment.dart';
 import 'package:induk/common/models/equipment_category.dart';
-import 'package:induk/features/rental/model/equipment_response.dart';
 import 'package:induk/features/rental/provider/rental_api_provider.dart';
 
 class RentalRepository {
@@ -29,10 +29,16 @@ class RentalRepository {
       sortDirection: sortDirection,
     );
 
-    final equipmentResponse = EquipmentResponse.fromJson(equipmentModelsJson);
-    final equipmentList = equipmentResponse.equipmentList;
+    final apiResponse = ApiResponse<List<Equipment>>.fromJson(
+      json: equipmentModelsJson,
+      fromDataJson: (data) {
+          return (data as List).map((e) => Equipment.fromJson(e)).toList();
+        },
+    );
 
-    return equipmentList;
+    final equipmentList = apiResponse.data;
+
+    return equipmentList ?? [];
   }
 
   void dispose() {
