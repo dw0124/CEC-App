@@ -2,10 +2,10 @@ sealed class Result<T> {
   const Result();
 
   /// Creates an instance of Result containing a value
-  factory Result.ok(T value) => Success(value);
+  factory Result.success(T value) => Success(value);
 
   /// Create an instance of Result containing an error
-  factory Result.error(Exception error) => Failure(error);
+  factory Result.failure(Exception error) => Failure(error);
 }
 
 /// Subclass of Result for values
