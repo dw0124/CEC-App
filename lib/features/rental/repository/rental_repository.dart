@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:induk/common/models/api_response.dart';
 import 'package:induk/common/models/equipment.dart';
 import 'package:induk/common/models/equipment_category.dart';
+import 'package:induk/common/models/result.dart';
 import 'package:induk/features/rental/provider/rental_api_provider.dart';
 
 class RentalRepository {
@@ -42,13 +45,21 @@ class RentalRepository {
   }
 
   /// 장바구니 추가
-  void requestAddToCart({required int id}) async {
+  Future<Result<void>> requestAddToCart({required int id}) async {
     final List<int> equipmentId = [id];
 
-    final json = await _rentalApiProvider.requestAddToCart(id: equipmentId);
+    try {
+    final response = await _rentalApiProvider.requestAddToCart(id: equipmentId);
+    final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
 
-    final apiResponse = ApiResponse.fromJson(json: json);
-
+      if (response.statusCode == 200) {
+        return Result.success(null);
+      } else {
+        return Result.failure(Exception('오류: ${response.statusCode}'));
+      }
+    } catch (e) {
+      return Result.failure(Exception('requestAddToCart failed: $e'));
+    }
   }
 
   /// 장비 대여
