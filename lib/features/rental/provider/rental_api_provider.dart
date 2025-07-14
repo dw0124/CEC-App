@@ -90,7 +90,7 @@ class RentalApiProvider {
   }
 
   /// 장바구니에 추가
-  Future<Map<String, dynamic>> requestAddToCart({required List<int> id}) async {
+  Future<http.Response> requestAddToCart({required List<int> id}) async {
     try {
       final accessToken = await TokenRepository().getAccessToken();
 
@@ -117,8 +117,7 @@ class RentalApiProvider {
         body: body
       );
 
-      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
-      return jsonResponse;
+      return response;
     } on TokenException {
       rethrow;
     } catch (error) {
@@ -127,7 +126,7 @@ class RentalApiProvider {
   }
 
   /// 장비 대여
-  Future<Map<String, dynamic>> rentCartItems({
+  Future<http.Response> rentCartItems({
     required List<int> cartItemIds,
     required String startAt,
     required String endAt,
@@ -162,8 +161,7 @@ class RentalApiProvider {
         body: body,
       );
 
-      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
-      return jsonResponse;
+      return response;
     } on TokenException {
       rethrow;
     } catch (error) {
