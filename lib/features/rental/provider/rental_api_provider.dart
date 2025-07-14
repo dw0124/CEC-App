@@ -89,5 +89,87 @@ class RentalApiProvider {
     }
   }
 
+  /// 장바구니에 추가
+  Future<Map<String, dynamic>> requestAddToCart({required List<int> id}) async {
+    try {
+      final accessToken = await TokenRepository().getAccessToken();
+
+      final String baseURL = dotenv.env['BASE_URL']!;
+
+      final header = {
+        "accept": "*/*",
+        "Authorization": "Bearer $accessToken",
+        "Referer": "https://$baseURL",
+      };
+
+      final body = jsonEncode({
+        "ids": id,
+      });
+
+      final url = Uri.https(
+          baseURL,
+          "/api/equipments/cart",
+      );
+
+      var response = await _httpClient.post(
+        url,
+        headers: header,
+        body: body
+      );
+
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    } on TokenException {
+      rethrow;
+    } catch (error) {
+      throw Exception("장바구니 추가 실패: $error");
+    }
+  }
+
+  /// 장비 대여
+  Future<Map<String, dynamic>> rentCartItems({
+    required List<int> cartItemIds,
+    required String startAt,
+    required String endAt,
+  }) async {
+    try {
+      final accessToken = await TokenRepository().getAccessToken();
+
+      final String baseURL = dotenv.env['BASE_URL']!;
+
+      final header = {
+        "accept": "*/*",
+        "Authorization": "Bearer $accessToken",
+        "Content-Type": "application/json",
+        "Referer": "https://$baseURL",
+      };
+
+      final body = jsonEncode({
+        "action": "RENT_REQUEST",
+        "ids": cartItemIds,
+        "startAt": startAt,
+        "endAt": endAt
+      });
+
+      final url = Uri.https(
+          baseURL,
+          "/api/equipments/action"
+      );
+
+      var response = await _httpClient.patch(
+        url,
+        headers: header,
+        body: body,
+      );
+
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse;
+    } on TokenException {
+      rethrow;
+    } catch (error) {
+      throw Exception("대여 요청 실패: $error");
+    }
+  }
+
   void close() { _httpClient.close(); }
 }
