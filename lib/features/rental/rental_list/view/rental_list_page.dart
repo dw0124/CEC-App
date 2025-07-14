@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:induk/common/models/equipment.dart';
+import 'package:induk/features/rental/rental_apply/bloc/rental_apply_bloc.dart';
 import 'package:induk/features/rental/rental_apply/view/rental_apply_page.dart';
 import 'package:induk/features/rental/rental_list//view/widget/rental_list_item.dart';
 import 'package:induk/features/rental/rental_list/bloc/rental_list_bloc.dart';
 import 'package:induk/features/rental/rental_list/bloc/rental_list_event.dart';
 import 'package:induk/features/rental/rental_list/bloc/rental_list_state.dart';
+import 'package:induk/features/rental/repository/rental_repository.dart';
 
 class RentalListPage extends StatefulWidget {
 
@@ -42,13 +44,15 @@ class _RentalListPageState extends State<RentalListPage> with AutomaticKeepAlive
                 key: ValueKey(equipment.id),
                 equipment: equipment,
                 onTap: () {
-                  final rentalApplyPage = RentalApplyPage(
-                      equipment: equipment);
+                  final repository = context.read<RentalRepository>();
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => rentalApplyPage,
-                      )
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => BlocProvider(
+                        create: (context) => RentalApplyBloc(repository, equipment),
+                        child: RentalApplyPage(),
+                      ),
+                    ),
                   );
                 },
               );
