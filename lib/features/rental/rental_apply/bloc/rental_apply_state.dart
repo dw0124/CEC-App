@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:induk/common/models/equipment.dart';
+import 'package:induk/common/models/result.dart';
 
 enum RentalApplyStatus { initial, loading, success, failure }
 
@@ -16,11 +17,13 @@ class RentalApplyState extends Equatable {
   final DateTime startAt;
   final DateTime endAt;
 
+  final Result<void>? addCartResult;
 
   const RentalApplyState({
     required this.equipment,
     required this.startAt,
     required this.endAt,
+    this.addCartResult,
   });
 
   factory RentalApplyState.initial({required Equipment equipment}) {
@@ -36,15 +39,17 @@ class RentalApplyState extends Equatable {
     Equipment? equipment,
     DateTime? startAt,
     DateTime? endAt,
+    Result<void>? addCartResult,
   }) {
     return RentalApplyState(
       equipment: equipment ?? this.equipment,
       startAt: startAt ?? this.startAt,
       endAt: endAt ?? this.endAt,
+      addCartResult: addCartResult ?? this.addCartResult
     );
   }
 
   @override
-  List<Object?> get props => [equipment, startAt, endAt];
+  List<Object?> get props => [equipment, startAt, endAt, addCartResult];
 }
 
