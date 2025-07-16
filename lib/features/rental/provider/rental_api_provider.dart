@@ -1,6 +1,6 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
-import 'package:induk/common/errors.dart';
+import 'package:induk/common/error/errors.dart';
 import 'dart:convert';
 
 import 'package:induk/common/repository/token_repository.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:induk/common/errors.dart';
+import 'package:induk/common/error/errors.dart';
 
 class TokenRepository {
   static final TokenRepository _instance = TokenRepository._internal();
