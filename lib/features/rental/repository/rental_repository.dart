@@ -1,10 +1,10 @@
-import 'dart:convert';
-
+import 'package:induk/common/error/error_mapper.dart';
 import 'package:induk/common/models/api_response.dart';
 import 'package:induk/common/models/equipment.dart';
 import 'package:induk/common/models/equipment_category.dart';
 import 'package:induk/common/models/result.dart';
 import 'package:induk/features/rental/provider/rental_api_provider.dart';
+import 'package:induk/common/network/http_response_handler.dart';
 
 class RentalRepository {
   RentalRepository({RentalApiProvider? rentalApiProvider})
@@ -49,16 +49,11 @@ class RentalRepository {
     final List<int> equipmentId = [id];
 
     try {
-    final response = await _rentalApiProvider.requestAddToCart(id: equipmentId);
-    final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
-
-      if (response.statusCode == 200) {
-        return Result.success(null);
-      } else {
-        return Result.failure(Exception('오류: ${response.statusCode}'));
-      }
+      final response = await _rentalApiProvider.requestAddToCart(id: equipmentId);
+      final jsonResponse = httpResponseHandler(response);
+      return Result.success(null);
     } catch (e) {
-      return Result.failure(Exception('requestAddToCart failed: $e'));
+      return ErrorMapper.toFailure(e);
     }
   }
 
