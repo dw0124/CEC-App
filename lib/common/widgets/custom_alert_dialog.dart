@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:induk/common/widgets/colors.dart';
 
 class CustomAlertDialog extends StatelessWidget {
+  final bool isSingleButton;
   final String title;
   final String content;
   final String cancelText;
@@ -11,6 +11,7 @@ class CustomAlertDialog extends StatelessWidget {
 
   const CustomAlertDialog({
     super.key,
+    this.isSingleButton = false,
     required this.title,
     required this.content,
     this.cancelText = '취소',
@@ -20,13 +21,17 @@ class CustomAlertDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final maxWidth = MediaQuery.of(context).size.width;
+
     return AlertDialog(
-      insetPadding: EdgeInsets.all(10),
+      insetPadding: EdgeInsets.all(16),
       actionsPadding: EdgeInsets.only(bottom: 0),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
       ),
       title: Container(
+        width: maxWidth,
+        alignment: Alignment.center,
         child: Text(
             title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
         ),
@@ -44,13 +49,15 @@ class CustomAlertDialog extends StatelessWidget {
           padding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
           child: Row(
             children: [
+              if(!isSingleButton)
               Expanded(
                 child: TextButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: Text(cancelText, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.black)),
+                  child: Text(cancelText, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.grey.shade600)),
                 ),
               ),
 
+              if(!isSingleButton)
               Container(
                 height: 48,
                 width: 1,
