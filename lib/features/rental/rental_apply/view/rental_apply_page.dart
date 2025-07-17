@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:induk/common/models/result.dart';
 import 'package:induk/common/widgets/app_button.dart';
+import 'package:induk/common/widgets/custom_alert_dialog.dart';
 import 'package:induk/common/widgets/key_value_text.dart';
 import 'package:induk/features/rental/rental_apply/bloc/rental_apply_bloc.dart';
+import 'package:induk/features/rental/rental_apply/bloc/rental_apply_event.dart';
 import 'package:induk/features/rental/rental_apply/bloc/rental_apply_state.dart';
 
 class RentalApplyPage extends StatefulWidget {
@@ -26,27 +28,37 @@ class _RentalApplyPageState extends State<RentalApplyPage> {
       listenWhen: (prev, curr) => prev.addCartResult != curr.addCartResult,
       listener: (BuildContext context, state) {
         if (state.addCartResult != null) {
-          if (state.addCartResult is Success<bool>) {
-            showDialog(
-              context: context,
-              builder: (BuildContext dialogContext) {
-                return AlertDialog(
-                  title: const Text('성공'),
-                  content: const Text('상품이 장바구니에 성공적으로 추가되었습니다.'),
-                  actions: <Widget>[
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(dialogContext).pop();
-                      },
-                      child: const Text('확인'),
-                    ),
-                  ],
-                );
-              },
-            );
+          switch (state.addCartResult) {
+            case Success(:final value):
+              showDialog(
+                context: context,
+                builder: (BuildContext dialogContext) {
+                  return CustomAlertDialog(
+                    title: '상품이 장바구니에 담겼습니다.',
+                    cancelText: '닫기',
+                    confirmText: '장바구니 보기',
+                    onConfirm: () {  },
+                    content: '',
+                  );
+                },
+              );
+              break;
+            case Failure(:final error):
+              showDialog(
+                context: context,
+                builder: (BuildContext dialogContext) {
+                  return CustomAlertDialog(
+                    isSingleButton: true,
+                    title: '장바구니 추가에 실패하였습니다.',
+                    onConfirm: () {  },
+                    content: '',
+                  );
+                },
+              );
+              break;
+            default:
+              break;
           }
-        } else if(state.addCartResult is Failure<bool>) {
-
         }
       },
       child: Scaffold(
@@ -133,7 +145,9 @@ class _RentalApplyPageState extends State<RentalApplyPage> {
                 children: [
                   Expanded(
                     child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          context.read<RentalApplyBloc>().add(RentalApplyAddToCart());
+                        },
                         style: ElevatedButton.styleFrom(
                           fixedSize: Size(double.infinity, buttonHeight),
                           foregroundColor: Color(0xFF8A1E35),
