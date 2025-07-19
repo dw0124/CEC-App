@@ -24,6 +24,7 @@ class _UserEditPageState extends State<UserEditPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset : false,
       appBar: AppBar(
         scrolledUnderElevation: 0,
         elevation: 0,
@@ -86,13 +87,27 @@ class _UserEditPageState extends State<UserEditPage> {
 
                 //Divider(),
 
-                SizedBox(height: 32,),
-
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('전화번호'),
-                    Text('010-1234-1234'),
+                    SizedBox(width: 80, child: Text('전화번호')),
+                    Expanded(
+                      child: TextField(
+                        textAlign: TextAlign.right,
+                        decoration: InputDecoration(
+                          isDense: true,
+                          border: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey.shade400, width: 1),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black87, width: 2),
+                          ),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey.shade300, width: 1),
+                          ),
+                          contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
 
