@@ -10,7 +10,7 @@ class UserEditProvider {
 
   final http.Client _httpClient;
 
-  Future<Map<String, dynamic>> updateUserInfoRequest({
+  Future<http.Response> updateUserInfoRequest({
     required String name,
     required String phoneNumber,
     required String nickname,
@@ -59,9 +59,8 @@ class UserEditProvider {
 
       final streamedResponse = await _httpClient.send(request);
       final response = await http.Response.fromStream(streamedResponse);
-      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
 
-      return jsonResponse;
+      return response;
     } on TokenException {
       rethrow;
     } catch (error) {
