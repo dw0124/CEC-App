@@ -14,9 +14,21 @@ class UserEditPage extends StatefulWidget {
 class _UserEditPageState extends State<UserEditPage> {
   late User user;
 
+  final TextEditingController _phoneNumberController = TextEditingController();
+
+  @override
+  void dispose() {
+    _phoneNumberController.dispose();
+
+    super.dispose();
+  }
+
   @override
   void initState() {
     user = widget.user;
+
+    // //textField 초기값
+    _phoneNumberController.text = '010-1234-1234';
 
     super.initState();
   }
@@ -92,6 +104,7 @@ class _UserEditPageState extends State<UserEditPage> {
                     SizedBox(width: 80, child: Text('전화번호')),
                     Expanded(
                       child: TextField(
+                        controller: _phoneNumberController,
                         textAlign: TextAlign.right,
                         decoration: InputDecoration(
                           isDense: true,
@@ -104,7 +117,7 @@ class _UserEditPageState extends State<UserEditPage> {
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.grey.shade300, width: 1),
                           ),
-                          contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
                         ),
                       ),
                     ),
