@@ -4,7 +4,7 @@ import 'package:induk/common/error/errors.dart';
 import 'package:induk/common/models/result.dart';
 
 class ErrorMapper {
-  static Failure toFailure(Object error) {
+  static Result<T> toFailure<T>(Object error) {
     Exception? originalException = error is Exception ? error : null;
     String? userFriendlyMessage;
 
