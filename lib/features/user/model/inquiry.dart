@@ -50,6 +50,28 @@ enum InquiryStatus {
   }
 }
 
+class Answer {
+  final String content;
+  final Author author;
+
+  Answer({
+    required this.content,
+    required this.author,
+  });
+
+  factory Answer.fromJson(Map<String, dynamic> json) {
+    final content = json['content'];
+
+    final authorJson = json['author'];
+    final author = Author.fromJson(authorJson);
+
+    return Answer(
+        content: content,
+        author: author
+    );
+  }
+}
+
 class Inquiry {
   final int id;
   final String title;
@@ -57,7 +79,8 @@ class Inquiry {
   final List<String> attachments;
   final InquiryType type;
   final InquiryStatus status;
-  final Author author;
+  final String createdAt;
+  final Answer answer;
 
   Inquiry({
     required this.id,
@@ -66,7 +89,8 @@ class Inquiry {
     required this.attachments,
     required this.type,
     required this.status,
-    required this.author,
+    required this.createdAt,
+    required this.answer,
   });
 
   factory Inquiry.fromJson(Map<String, dynamic> json) {
@@ -81,8 +105,10 @@ class Inquiry {
     final statusName = json['status'];
     final status = InquiryStatus.fromString(statusName);
 
-    final authorJson = json['author'];
-    final author = Author.fromJson(authorJson);
+    final createdAt = json['createdAt'];
+
+    final answerJson = json['answer'];
+    final answer = Answer.fromJson(answerJson);
 
     return Inquiry(
         id: id,
@@ -91,7 +117,8 @@ class Inquiry {
         attachments: attachments,
         type: type,
         status: status,
-        author: author
+        createdAt: createdAt,
+        answer: answer,
     );
   }
 }
