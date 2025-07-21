@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:induk/common/models/user.dart';
+import 'package:induk/features/user/presentation/user_edit/view/user_edit_page.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({super.key});
@@ -47,14 +48,20 @@ class _UserPageState extends State<UserPage> {
                 ListTile(
                   contentPadding: EdgeInsets.zero,
                   onTap: () {
-                    // 탭 시 동작
+                    final userEditPage = UserEditPage(user: user);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => userEditPage,
+                        )
+                    );
                   },
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       CircleAvatar(
                         radius: 20.0,
-                        backgroundImage: NetworkImage(user.profilePicture),
+                        //backgroundImage: NetworkImage(user.profilePicture),
                         backgroundColor: Colors.grey,
                       ),
                       SizedBox(width: 8,),
