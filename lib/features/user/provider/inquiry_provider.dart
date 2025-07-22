@@ -49,5 +49,38 @@ class InquiryProvider {
     }
   }
 
+  Future<http.Response> requestInquiry({
+    required int id
+  }) async {
+    try {
+      final accessToken = await TokenRepository().getAccessToken();
+
+      final String baseURL = dotenv.env['BASE_URL']!;
+
+      final header = {
+        "accept": "*/*",
+        "Authorization": "Bearer $accessToken",
+        "Content-Type": "application/json",
+        "Referer": "https://$baseURL",
+      };
+
+      final url = Uri.https(
+          baseURL,
+          "/api/inquiry/$id",
+      );
+
+      var response = await _httpClient.get(
+        url,
+        headers: header,
+      );
+
+      return response;
+    } on TokenException {
+      rethrow;
+    } catch (error) {
+      throw Exception("문의글 불러오기 실패: $error");
+    }
+  }
+
   void close() { _httpClient.close(); }
 }
