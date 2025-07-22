@@ -142,38 +142,79 @@ class _InquiryApplyPageState extends State<InquiryApplyPage> {
                           children: [
                             Text('사진'),
 
-                            AppButton(
-                              text: '사진선택', onPressed: () async {
-                                final ImagePicker picker = ImagePicker();
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 8.0),
+                                  child: IconButton(
+                                    padding: EdgeInsets.zero,
+                                    icon: const Icon(
+                                      Icons.add_photo_alternate_outlined,
+                                      size: 30,
+                                      color: Colors.grey,
+                                    ),
+                                    onPressed: () async {
+                                      final ImagePicker picker = ImagePicker();
 
-                                final List<XFile> images = await picker.pickMultiImage(limit: 3);
+                                      int currentImageCount = imagePathList.length;
+                                      int remainingLimit = 3 - currentImageCount;
 
-                                setState(() {
-                                  imagePathList = [...imagePathList, ...images];
-                                });
-                              }
-                            ),
+                                      if (remainingLimit <= 0) {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('최대 3개의 이미지만 선택할 수 있습니다.')),
+                                        );
+                                        return;
+                                      }
 
-                            Container(
-                              height: 120,
-                              width: double.infinity,
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: imagePathList.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  final imagePath = imagePathList[index].path;
+                                      List<XFile> newImages = [];
+                                      if(remainingLimit == 1) {
+                                        final newImage = await picker.pickImage(source: ImageSource.gallery);
+                                        newImages.add(newImage!);
+                                      } else {
+                                        newImages = await picker.pickMultiImage(limit: remainingLimit);
+                                      }
 
-                                  return DeletableImageTile(
-                                      imagePath: imagePath,
-                                      onDelete: () {
+
+                                      if (newImages.isNotEmpty) {
                                         setState(() {
-                                          imagePathList.removeAt(index);
+                                            imagePathList = [...imagePathList, ...newImages];
                                         });
                                       }
-                                  );
-                                },
-                              ),
-                            ),
+                                    },
+                                    tooltip: '사진 선택',
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 60,
+                                  child: VerticalDivider(
+                                    color: Colors.grey,
+                                    thickness: 1,
+                                  ),
+                                ),
+
+                                Expanded(
+                                  child: Container(
+                                    height: 110,
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: imagePathList.length,
+                                      itemBuilder: (BuildContext context, int index) {
+                                        final imageFile = imagePathList[index];
+                                        return DeletableImageTile(
+                                            imagePath: imageFile.path,
+                                            onDelete: () {
+                                              setState(() {
+                                                imagePathList.removeAt(index);
+                                              });
+                                            }
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
                           ],
                         ),
 
