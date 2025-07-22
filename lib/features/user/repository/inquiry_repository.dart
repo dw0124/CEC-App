@@ -40,6 +40,33 @@ class InquiryRepository {
     }
   }
 
+  /// 문의글 상세 조회
+  Future<Result<Inquiry>> requestInquiry({
+    required int id
+  }) async {
+    try {
+      final response = await _inquiryProvider.requestInquiry(id: id);
+      final jsonResponse = httpResponseHandler(response);
+
+      final apiResponse = ApiResponse<Inquiry>.fromJson(
+        json: jsonResponse,
+        fromDataJson: (dynamic jsonData) {
+            return Inquiry.fromJson(jsonData);
+        },
+      );
+
+      final inquiry = apiResponse.data;
+
+      if (inquiry == null) {
+        return Result.failure(Exception('Inquiry data is null'), '문의글 상세 정보를 가져오지 못했습니다.');
+      }
+
+      return Result.success(inquiry);
+    } catch (e) {
+      return ErrorMapper.toFailure(e);
+    }
+  }
+
   void dispose() {
     _inquiryProvider.close();
   }
