@@ -1,16 +1,23 @@
-# induk
+# 🚀induk
 
-A new Flutter project.
+장비 대여 서비스
 
-## Getting Started
+## 🛠 기술 스택
 
-This project is a starting point for a Flutter application.
+#### 🧱 프레임워크
+- Flutter SDK: 3.29.0
+- Dart SDK: 3.7.0
 
-A few resources to get you started if this is your first Flutter project:
+#### 🔄 상태관리 라이브러리
+- bloc: ^9.0.0
+- flutter_bloc: ^9.1.1
+- equatable: ^2.0.7
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+#### 📦 기타 라이브러리
+- http: ^1.4.0
+- flutter_dotenv: ^5.2.1
+- flutter_secure_storage: ^9.2.4
+- image_picker: ^1.1.2
+- cupertino_icons: ^1.0.8
+- flutter_native_splash: ^2.4.6
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
