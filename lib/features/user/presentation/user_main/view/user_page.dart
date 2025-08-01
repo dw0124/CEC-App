@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:induk/common/models/user.dart';
+import 'package:induk/features/user/presentation/inquiry/bloc/Inquiry_bloc.dart';
+import 'package:induk/features/user/presentation/inquiry/view/inquiry_page.dart';
 import 'package:induk/features/user/presentation/user_edit/view/user_edit_page.dart';
+import 'package:induk/features/user/repository/inquiry_repository.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({super.key});
@@ -115,7 +119,20 @@ class _UserPageState extends State<UserPage> {
                         contentPadding: EdgeInsets.zero,
                         leading: Text('1:1 문의', style: TextStyle(fontSize: 16),),
                         trailing: Icon(Icons.chevron_right),
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => RepositoryProvider(
+                                create: (context) => InquiryRepository(),
+                                child: BlocProvider(
+                                  create: (context) => InquiryBloc(context.read<InquiryRepository>()),
+                                  child: const InquiryPage(),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
                       ),
 
                       ListTile(
