@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:induk/common/widgets/app_button.dart';
 import 'package:induk/features/user/presentation/inquiry/bloc/Inquiry_bloc.dart';
 import 'package:induk/features/user/presentation/inquiry/bloc/Inquiry_event.dart';
 import 'package:induk/features/user/presentation/inquiry/bloc/Inquiry_state.dart';
+import 'package:induk/features/user/presentation/inquiry/view/inquiry_apply_page.dart';
 import 'package:induk/features/user/presentation/inquiry/view/widget/inquiry_list_item.dart';
 
 class InquiryPage extends StatefulWidget {
@@ -49,7 +51,34 @@ class _InquiryPageState extends State<InquiryPage> {
                   };
                 },
               )
-          )
+          ),
+      ),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border(
+            top: BorderSide(
+              color: Colors.grey.shade300,
+              width: 1,
+            ),
+          ),
+        ),
+        padding: EdgeInsets.fromLTRB(16, 8, 16, MediaQuery.of(context).padding.bottom),
+        child: Row(
+          spacing: 16,
+          children: [
+            Expanded(
+                child: AppButton(text: '1:1 문의하기', onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => InquiryApplyPage()
+                    ),
+                  );
+                })
+            ),
+          ],
+        ),
       ),
     );
   }
