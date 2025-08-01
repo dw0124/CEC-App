@@ -16,6 +16,9 @@ import 'package:induk/features/rental/repository/rental_repository.dart';
 import 'package:induk/features/rental/rental_main/bloc/rental_bloc.dart';
 import 'package:induk/features/rental/rental_main/view/rental_page.dart';
 
+import 'package:induk/features/cart/bloc/cart_bloc.dart';
+import 'package:induk/features/cart/repository/cart_repository.dart';
+
 import 'package:induk/features/user/presentation/user_main/view/user_page.dart';
 
 Future<void> main() async {
@@ -40,7 +43,6 @@ class _MyAppState extends State<MyApp> {
   late final Future<bool> _initializationFuture;
 
   int _selectedIndex = 0;
-  late final List<Widget> _pages;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -63,7 +65,13 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
-    _pages = [
+    _initializationFuture = _initializeAppAndCheckLogin();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    final List<Widget> pages = [
       RepositoryProvider(
         create: (context) => RentalRepository(),
         child: BlocProvider(
@@ -81,49 +89,52 @@ class _MyAppState extends State<MyApp> {
       UserPage()
     ];
 
-    _initializationFuture = _initializeAppAndCheckLogin();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-
-    return MaterialApp(
-      theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
-        appBarTheme: AppBarTheme(
-          backgroundColor: Colors.white,
-          elevation: 0
+    return RepositoryProvider(
+      create: (context) => CartRepository(),
+      child: BlocProvider(
+        create: (context) => CartBloc(context.read<CartRepository>()),
+        child: MaterialApp(
+          theme: ThemeData(
+            scaffoldBackgroundColor: Colors.white,
+            appBarTheme: AppBarTheme(
+              backgroundColor: Colors.white,
+              elevation: 0
+            ),
+          ),
+          home: FutureBuilder(
+              future: _initializationFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const SizedBox.shrink();
+                } else {
+                  if (snapshot.hasData && snapshot.data == true) {
+                    return Scaffold(
+                      body: IndexedStack(
+                        index: _selectedIndex,
+                        children: pages,
+                      ),
+                      bottomNavigationBar: BottomNavigationBar(
+                        items: const <BottomNavigationBarItem>[
+                          BottomNavigationBarItem(
+                              icon: Icon(Icons.home), label: '장비대여'),
+                          BottomNavigationBarItem(
+                              icon: Icon(Icons.business), label: '공지사항'),
+                          BottomNavigationBarItem(
+                              icon: Icon(Icons.account_circle_outlined),
+                              label: '마이페이지'),
+                        ],
+                        currentIndex: _selectedIndex,
+                        selectedItemColor: AppColors.main,
+                        onTap: _onItemTapped,
+                      ),
+                    );
+                  } else {
+                    return LoginPage();
+                  }
+                }
+              },
+          ),
         ),
-      ),
-      home: FutureBuilder(
-          future: _initializationFuture,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const SizedBox.shrink();
-            } else {
-              if (snapshot.hasData && snapshot.data == true) {
-                return Scaffold(
-                  body: _pages.elementAt(_selectedIndex),
-                  bottomNavigationBar: BottomNavigationBar(
-                    items: const <BottomNavigationBarItem>[
-                      BottomNavigationBarItem(
-                          icon: Icon(Icons.home), label: '장비대여'),
-                      BottomNavigationBarItem(
-                          icon: Icon(Icons.business), label: '공지사항'),
-                      BottomNavigationBarItem(
-                          icon: Icon(Icons.account_circle_outlined),
-                          label: '마이페이지'),
-                    ],
-                    currentIndex: _selectedIndex,
-                    selectedItemColor: AppColors.main,
-                    onTap: _onItemTapped,
-                  ),
-                );
-              } else {
-                return LoginPage();
-              }
-            }
-          },
       ),
     );
   }
