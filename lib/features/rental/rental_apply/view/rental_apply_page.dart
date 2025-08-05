@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:induk/common/models/result.dart';
 import 'package:induk/common/widgets/app_button.dart';
+import 'package:induk/common/widgets/cart_badge_icon_button.dart';
 import 'package:induk/common/widgets/custom_alert_dialog.dart';
 import 'package:induk/common/widgets/key_value_text.dart';
 import 'package:induk/features/rental/rental_apply/bloc/rental_apply_bloc.dart';
@@ -67,6 +68,9 @@ class _RentalApplyPageState extends State<RentalApplyPage> {
               '장비 예약',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
           ),
+          actions: [
+            CartBadgeIconButton(),
+          ],
         ),
         body: Padding(
           padding: const EdgeInsets.fromLTRB(16, 1, 16, 16),
