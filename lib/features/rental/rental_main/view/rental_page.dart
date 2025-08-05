@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:induk/features/cart/view/cart_page.dart';
+import 'package:induk/common/widgets/cart_badge_icon_button.dart';
 import 'package:induk/features/rental/rental_list/bloc/rental_list_bloc.dart';
 import 'package:induk/features/rental/rental_list/view/rental_list_page.dart';
 import 'package:induk/features/rental/repository/rental_repository.dart';
@@ -54,18 +54,7 @@ class _RentalPageState extends State<RentalPage> with SingleTickerProviderStateM
         ),
         actions: [
           IconButton(onPressed: () {}, icon: Icon(Icons.search)),
-          IconButton(
-              onPressed: () {
-                final cartPage = CartPage();
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => cartPage,
-                    )
-                );
-              },
-              icon: Icon(Icons.shopping_bag_outlined)
-          )
+          CartBadgeIconButton()
         ],
         elevation: 0.0,
         bottom: TabBar(
