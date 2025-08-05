@@ -28,9 +28,9 @@ class RentalListItem extends StatelessWidget {
                 Container(
                   width: 100,
                   height: 100,
-                  color: Colors.grey.shade300,
+                  color: Colors.transparent,
                   child: Center(
-                    child: Icon(Icons.image, color: Colors.grey),
+                    child: Image.network(equipment.imageUrl)
                   ),
                 ),
 
@@ -38,7 +38,7 @@ class RentalListItem extends StatelessWidget {
 
                 // 장비 이름, 모델명, 일련번호, 대여기간
                 SizedBox(
-                  height: 100,
+                  height: 80,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -59,7 +59,7 @@ class RentalListItem extends StatelessWidget {
                         )
                       ),
                       Text(
-                        '${equipment.id}',
+                        equipment.serialNumber,
                         style: TextStyle(
                           fontSize: 12,
                           color: Colors.grey.shade700,
