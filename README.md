@@ -18,4 +18,3 @@
 - image_picker: ^1.1.2
 - cupertino_icons: ^1.0.8
 - flutter_native_splash: ^2.4.6
-
