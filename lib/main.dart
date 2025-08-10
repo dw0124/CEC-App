@@ -94,6 +94,7 @@ class _MyAppState extends State<MyApp> {
       child: BlocProvider(
         create: (context) => CartBloc(context.read<CartRepository>()),
         child: MaterialApp(
+          debugShowCheckedModeBanner: false,
           theme: ThemeData(
             scaffoldBackgroundColor: Colors.white,
             appBarTheme: AppBarTheme(
