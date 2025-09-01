@@ -14,23 +14,16 @@ class NoticeListItem extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       onTap: onTap,
       child: SizedBox(
-        height: 80,
+        height: 60,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               notice.title,
-              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
-            ),
-
-            Text(
-              notice.content,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
             ),
-
-
             Row(
               children: [
                 Text(

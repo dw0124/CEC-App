@@ -37,7 +37,7 @@ class NoticeDetailPage extends StatelessWidget {
                 children: [
                   Text(
                     notice.title,
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
 
                   Row(
