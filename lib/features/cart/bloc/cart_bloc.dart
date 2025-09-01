@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
+import 'package:induk/common/models/result.dart';
 import 'package:induk/features/cart/bloc/cart_event.dart';
 import 'package:induk/features/cart/bloc/cart_state.dart';
+import 'package:induk/features/cart/model/cart_item.dart';
 import 'package:induk/features/cart/repository/cart_repository.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
@@ -24,13 +26,21 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
   Future<void> _fetchCartItems(CartFetch event, Emitter<CartState> emit) async {
-    final cartItems = await _cartRepository.fetchCartItems();
-    final updateState = state.copyWith(
-        cartStatus: CartStatus.success,
-        cartItems: cartItems,
-        selectedItemsId: {},
-    );
-    emit(updateState);
+    final result = await _cartRepository.fetchCartItems();
+
+    switch (result) {
+      case Success(:final value):
+        final updateState = state.copyWith(
+          cartStatus: CartStatus.success,
+          cartItems: value,
+          selectedItemsId: {},
+        );
+        emit(updateState);
+        break;
+      case Failure(:final message):
+
+        break;
+    }
   }
 
   Future<void> _selectAll(CartSelectAll event, Emitter<CartState> emit) async {
@@ -92,14 +102,20 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         .where((item) => item.id != selectedItemId)
         .toList();
 
-    final newState = state.copyWith(
-        cartItems: updatedCartItems,
-        selectedItemsId: updatedSelectedItems
-    );
+    final result = await _cartRepository.deleteCartItems(cartItemIds: [selectedItemId]);
 
-    _cartRepository.deleteCartItems(cartItemIds: [selectedItemId]);
+    switch (result) {
+      case Success():
+        final newState = state.copyWith(
+            cartItems: updatedCartItems,
+            selectedItemsId: updatedSelectedItems
+        );
+        emit(newState);
+        break;
+      case Failure(:final message):
 
-    emit(newState);
+        break;
+    }
   }
 
   Future<void> _rentCartItems(CartRentSelectedRequested event, Emitter<CartState> emit) async {
@@ -114,7 +130,25 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         .map((cartItem) => cartItem.equipment.id)
         .toList();
 
-    _cartRepository.rentCartItems(cartItemIds: rentItems, startAt: startAt, endAt: endAt);
+    final unselectedCartItems = state.cartItems
+        .where((cartItem) => !selectedItemIds.contains(cartItem.id))
+        .toList();
+
+    final result = await _cartRepository.rentCartItems(cartItemIds: rentItems, startAt: startAt, endAt: endAt);
+
+    switch (result) {
+      case Success():
+        final updateState = state.copyWith(
+          cartStatus: CartStatus.success,
+          cartItems: unselectedCartItems,
+          selectedItemsId: {},
+        );
+        emit(updateState);
+        break;
+      case Failure(:final message):
+
+        break;
+    }
   }
 
   Future<void> _dateTimeUpdated(CartDateTimeUpdated event, Emitter<CartState> emit) async {
