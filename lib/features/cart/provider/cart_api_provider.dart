@@ -12,7 +12,7 @@ class CartApiProvider {
   final http.Client _httpClient;
 
   /// 장바구니 조회
-  Future<Map<String, dynamic>> fetchCartItems() async {
+  Future<http.Response> fetchCartItems() async {
     try {
       final accessToken = await TokenRepository().getAccessToken();
 
@@ -34,8 +34,7 @@ class CartApiProvider {
         headers: header,
       );
 
-      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
-      return jsonResponse;
+      return response;
     } on TokenException {
       rethrow;
     } catch (error) {
@@ -44,7 +43,7 @@ class CartApiProvider {
   }
 
   /// 장바구니 아이템 대여 신청
-  Future<Map<String, dynamic>> rentCartItems({
+  Future<http.Response> rentCartItems({
     required List<int> cartItemIds,
     required String startAt,
     required String endAt,
@@ -79,8 +78,7 @@ class CartApiProvider {
         body: body,
       );
 
-      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
-      return jsonResponse;
+      return response;
     } on TokenException {
       rethrow;
     } catch (error) {
@@ -89,7 +87,7 @@ class CartApiProvider {
   }
 
   /// 장바구니 아이템 삭제
-  Future<Map<String, dynamic>> deleteCartItems({
+  Future<http.Response> deleteCartItems({
     required List<int> cartItemIds,
   }) async {
     try {
@@ -119,9 +117,7 @@ class CartApiProvider {
 
       final streamedResponse = await _httpClient.send(request);
       final response = await http.Response.fromStream(streamedResponse);
-      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
-
-      return jsonResponse;
+      return response;
     } on TokenException {
       rethrow;
     } catch (error) {
