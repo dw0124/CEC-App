@@ -26,9 +26,12 @@ class _NoticePageState extends State<NoticePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        bottomOpacity: 0.0,
-        elevation: 0.0,
-        backgroundColor: Colors.transparent,
+        scrolledUnderElevation: 0,
+        elevation: 0,
+        title: Text(
+          '공지사항',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+        ),
       ),
       body: SafeArea(
         child: Padding(
@@ -52,10 +55,10 @@ class _NoticePageState extends State<NoticePage> {
                     ),
                   ),
 
-                  Text(
-                      "공지사항 ${context.watch<NoticeBloc>().state.notices.length}개",
-                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18)
-                  ),
+                  // Text(
+                  //     "공지사항 ${context.watch<NoticeBloc>().state.notices.length}개",
+                  //     style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18)
+                  // ),
 
                   Container(
                     child: BlocSelector<NoticeBloc, NoticeState, List<Notice>>(
