@@ -1,6 +1,10 @@
 import 'package:induk/features/cart/model/cart_item.dart';
-import 'package:induk/features/cart/model/cart_response.dart';
 import 'package:induk/features/cart/provider/cart_api_provider.dart';
+
+import 'package:induk/common/models/api_response.dart';
+import 'package:induk/common/models/result.dart';
+import 'package:induk/common/error/error_mapper.dart';
+import 'package:induk/common/network/http_response_handler.dart';
 
 class CartRepository {
   CartRepository({CartApiProvider? cartApiProvider})
@@ -8,18 +12,32 @@ class CartRepository {
 
   final CartApiProvider _cartApiProvider;
 
-  Future<List<CartItem>> fetchCartItems() async {
-    final json = await _cartApiProvider.fetchCartItems();
-    final cartResponse = CartResponse.fromJson(json);
+  Future<Result<List<CartItem>>> fetchCartItems() async {
+    try {
+      final response = await _cartApiProvider.fetchCartItems();
+      final jsonResponse = httpResponseHandler(response);
 
-    final List<CartItem> cartItems = cartResponse.data
-        .map((json) => CartItem.fromJson(json))
-        .toList();
+      final apiResponse = ApiResponse<List<CartItem>>.fromJson(
+        json: jsonResponse,
+        fromDataJson: (dynamic jsonData) {
+          if (jsonData is List) {
+            return jsonData
+                .map((e) => CartItem.fromJson(e as Map<String, dynamic>))
+                .toList();
+          }
+          return [];
+        },
+      );
 
-    return cartItems;
+      final List<CartItem> cartItems = apiResponse.data ?? [];
+
+      return Result.success(cartItems);
+    } catch (e) {
+      return ErrorMapper.toFailure(e);
+    }
   }
 
-  void rentCartItems({
+  Future<Result<void>> rentCartItems({
     required List<int> cartItemIds,
     required DateTime startAt,
     required DateTime endAt,
@@ -27,13 +45,29 @@ class CartRepository {
     final startAtString = startAt.toIso8601String();
     final endAtString = endAt.toIso8601String();
 
-    final jsonResponse = await _cartApiProvider.rentCartItems(cartItemIds: cartItemIds, startAt: startAtString, endAt: endAtString);
+    try {
+      final result = await _cartApiProvider.rentCartItems(
+          cartItemIds: cartItemIds,
+          startAt: startAtString,
+          endAt: endAtString
+      );
+
+      return Result.success(null);
+    } catch(e) {
+      return ErrorMapper.toFailure(e);
+    }
   }
 
-  void deleteCartItems({
+  Future<Result<void>> deleteCartItems({
     required List<int> cartItemIds,
   }) async {
-    final result = await _cartApiProvider.deleteCartItems(cartItemIds: cartItemIds);
+    try {
+      final result = await _cartApiProvider.deleteCartItems(
+          cartItemIds: cartItemIds);
+      return Result.success(null);
+    } catch(e) {
+      return ErrorMapper.toFailure(e);
+    }
   }
 
   void dispose() {
