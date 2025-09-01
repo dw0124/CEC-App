@@ -63,9 +63,9 @@ class _CartListItemState extends State<CartListItem> {
                 Container(
                   width: 100,
                   height: 100,
-                  color: Colors.grey.shade300,
+                  //color: Colors.grey.shade300,
                   child: Center(
-                    child: Icon(Icons.image, color: Colors.grey),
+                    child: Image.network(cartItem.equipment.imageUrl)
                   ),
                 ),
 
@@ -73,7 +73,7 @@ class _CartListItemState extends State<CartListItem> {
 
                 // 장비 이름, 모델명, 일련번호, 대여기간
                 SizedBox(
-                  height: 100,
+                  height: 90,
                   child: Column(
                     //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
